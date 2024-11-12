@@ -1,0 +1,13 @@
+{
+  "name": "@chainsafe/metamask-polkadot-types",
+  "version": "0.9.1",
+  "types": "./index.d.ts",
+  "author": "ChainSafe <info@chainsafe.io>",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@polkadot/api": "^12.4.2"
+  }
+}

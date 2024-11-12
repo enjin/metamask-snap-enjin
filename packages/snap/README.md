@@ -14,7 +14,10 @@ capabilities to include support for Polkadot, Kusama, and other
 Polkadot Wallet snap architecture, integration steps and detailed API documentation for dApp
 developers is covered in the
 [project wiki](https://github.com/ChainSafe/metamask-snap-polkadot/wiki), which also includes a
-usage guide for the [example dApp](https://polkadot.snap.chainsafe.io/).
+usage guide for the [example dApp](https://polkadot.snap.chainsafe.io/). Additional
+documentation is available on the
+[homepage](https://github.com/ChainSafe/metamask-snap-polkadot#polkadot-wallet-snap-for-metamask)
+for the project's GitHub repository.
 
 ## Local Development
 
@@ -23,7 +26,6 @@ run the following commands from the project root to launch the
 [Polkadot Wallet Snap Example dApp](https://github.com/ChainSafe/metamask-snap-polkadot/tree/master/packages/example).
 
 - `yarn install`
-- `yarn build`
 - `yarn run demo`
 
 
