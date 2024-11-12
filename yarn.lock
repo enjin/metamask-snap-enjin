@@ -2819,63 +2819,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chainsafe/metamask-polkadot-adapter@workspace:^, @chainsafe/metamask-polkadot-adapter@workspace:packages/adapter":
-  version: 0.0.0-use.local
-  resolution: "@chainsafe/metamask-polkadot-adapter@workspace:packages/adapter"
-  dependencies:
-    "@polkadot/api": "npm:^12.4.2"
-    "@polkadot/extension-inject": "npm:^0.52.3"
-    "@polkadot/types-augment": "npm:^12.4.2"
-    "@types/node": "npm:^17.0.36"
-    "@typescript-eslint/eslint-plugin": "npm:^5.27.1"
-    "@typescript-eslint/parser": "npm:^5.27.1"
-    eslint: "npm:^8.17.0"
-    typescript: "npm:4.7.3"
-  languageName: unknown
-  linkType: soft
-
-"@chainsafe/metamask-polkadot-types@workspace:^, @chainsafe/metamask-polkadot-types@workspace:packages/types":
-  version: 0.0.0-use.local
-  resolution: "@chainsafe/metamask-polkadot-types@workspace:packages/types"
-  dependencies:
-    "@polkadot/api": "npm:^12.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@chainsafe/polkadot-snap@workspace:packages/snap":
-  version: 0.0.0-use.local
-  resolution: "@chainsafe/polkadot-snap@workspace:packages/snap"
-  dependencies:
-    "@chainsafe/metamask-polkadot-types": "workspace:^"
-    "@metamask/key-tree": "npm:^9.1.2"
-    "@metamask/snaps-cli": "npm:^6.3.0"
-    "@metamask/snaps-sdk": "npm:^6.2.1"
-    "@metamask/snaps-types": "npm:^3.1.0"
-    "@metamask/snaps-ui": "npm:^3.1.0"
-    "@polkadot/api": "npm:^12.4.2"
-    "@polkadot/keyring": "npm:^13.0.2"
-    "@polkadot/types": "npm:^12.4.2"
-    "@polkadot/util": "npm:^13.0.2"
-    "@types/chai": "npm:^4.2.10"
-    "@types/mocha": "npm:^10.0.1"
-    "@types/sinon": "npm:^7.5.2"
-    "@types/sinon-chai": "npm:^3.2.3"
-    "@typescript-eslint/eslint-plugin": "npm:^5.27.1"
-    "@typescript-eslint/parser": "npm:^5.27.1"
-    chai: "npm:^4.2.0"
-    concurrently: "npm:^5.1.0"
-    deepmerge: "npm:^4.3.1"
-    eslint: "npm:^8.17.0"
-    mocha: "npm:10.1.0"
-    sinon: "npm:^9.0.1"
-    sinon-chai: "npm:^3.5.0"
-    strict-event-emitter-types: "npm:^2.0.0"
-    superstruct: "npm:^2.0.2"
-    ts-node: "npm:^8.6.2"
-    typescript: "npm:4.7.3"
-  languageName: unknown
-  linkType: soft
-
 "@csstools/normalize.css@npm:*":
   version: 12.0.0
   resolution: "@csstools/normalize.css@npm:12.0.0"
@@ -3069,6 +3012,63 @@ __metadata:
   checksum: 10c0/d350030f14eec212ebaa03a6afc320f8a4f5771c8e976a35f5b55453e821386625849cd790f0a4bc21c6cb2dace20cdeff41ff947b832b30c0e160f42a94ada5
   languageName: node
   linkType: hard
+
+"@enjin/metamask-enjin-adapter@workspace:^, @enjin/metamask-enjin-adapter@workspace:packages/adapter":
+  version: 0.0.0-use.local
+  resolution: "@enjin/metamask-enjin-adapter@workspace:packages/adapter"
+  dependencies:
+    "@polkadot/api": "npm:^12.4.2"
+    "@polkadot/extension-inject": "npm:^0.52.3"
+    "@polkadot/types-augment": "npm:^12.4.2"
+    "@types/node": "npm:^17.0.36"
+    "@typescript-eslint/eslint-plugin": "npm:^5.27.1"
+    "@typescript-eslint/parser": "npm:^5.27.1"
+    eslint: "npm:^8.17.0"
+    typescript: "npm:4.7.3"
+  languageName: unknown
+  linkType: soft
+
+"@enjin/metamask-enjin-types@workspace:^, @enjin/metamask-enjin-types@workspace:packages/types":
+  version: 0.0.0-use.local
+  resolution: "@enjin/metamask-enjin-types@workspace:packages/types"
+  dependencies:
+    "@polkadot/api": "npm:^12.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@enjin/snap@workspace:packages/snap":
+  version: 0.0.0-use.local
+  resolution: "@enjin/snap@workspace:packages/snap"
+  dependencies:
+    "@enjin/metamask-enjin-types": "workspace:^"
+    "@metamask/key-tree": "npm:^9.1.2"
+    "@metamask/snaps-cli": "npm:^6.3.0"
+    "@metamask/snaps-sdk": "npm:^6.2.1"
+    "@metamask/snaps-types": "npm:^3.1.0"
+    "@metamask/snaps-ui": "npm:^3.1.0"
+    "@polkadot/api": "npm:^12.4.2"
+    "@polkadot/keyring": "npm:^13.0.2"
+    "@polkadot/types": "npm:^12.4.2"
+    "@polkadot/util": "npm:^13.0.2"
+    "@types/chai": "npm:^4.2.10"
+    "@types/mocha": "npm:^10.0.1"
+    "@types/sinon": "npm:^7.5.2"
+    "@types/sinon-chai": "npm:^3.2.3"
+    "@typescript-eslint/eslint-plugin": "npm:^5.27.1"
+    "@typescript-eslint/parser": "npm:^5.27.1"
+    chai: "npm:^4.2.0"
+    concurrently: "npm:^5.1.0"
+    deepmerge: "npm:^4.3.1"
+    eslint: "npm:^8.17.0"
+    mocha: "npm:10.1.0"
+    sinon: "npm:^9.0.1"
+    sinon-chai: "npm:^3.5.0"
+    strict-event-emitter-types: "npm:^2.0.0"
+    superstruct: "npm:^2.0.2"
+    ts-node: "npm:^8.6.2"
+    typescript: "npm:4.7.3"
+  languageName: unknown
+  linkType: soft
 
 "@eslint-community/eslint-utils@npm:^4.2.0, @eslint-community/eslint-utils@npm:^4.4.0":
   version: 4.4.0
@@ -11111,8 +11111,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example@workspace:packages/example"
   dependencies:
-    "@chainsafe/metamask-polkadot-adapter": "workspace:^"
-    "@chainsafe/metamask-polkadot-types": "workspace:^"
+    "@enjin/metamask-enjin-adapter": "workspace:^"
+    "@enjin/metamask-enjin-types": "workspace:^"
     "@material-ui/core": "npm:^4.12.4"
     "@material-ui/icons": "npm:^4.11.3"
     "@material-ui/lab": "npm:latest"

@@ -2,7 +2,7 @@ import type { KeyringPair } from '@polkadot/keyring/types';
 import { Keyring } from '@polkadot/keyring';
 import { stringToU8a } from '@polkadot/util';
 import type { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
-import type { SnapNetworks } from '@chainsafe/metamask-polkadot-types';
+import type { SnapNetworks } from '@enjin/metamask-enjin-types';
 import { getConfiguration } from '../configuration';
 
 /**
@@ -28,11 +28,11 @@ export async function getKeyPair(): Promise<KeyringPair> {
 
 export const getCoinTypeByNetwork = (network: SnapNetworks): number => {
   switch (network) {
-    case 'kusama':
-    case 'westend':
-      return 434;
-    //polkadot and other substrate chains
+    // case 'enjin-relaychain':
+    // case 'enjin-matrixchain':
+    // case 'canary-relaychain':
+    // case 'canary-matrixchain':
     default:
-      return 354;
+      return 1155;
   }
 };

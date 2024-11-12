@@ -1,9 +1,9 @@
 import '@polkadot/types-augment';
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 import { MetamaskPolkadotSnap } from './snap';
 import { hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled } from './utils';
 
-const defaultSnapOrigin = 'npm:@chainsafe/polkadot-snap';
+const defaultSnapOrigin = 'npm:@enjin/snap';
 
 export type SnapInstallationParamNames = string;
 
@@ -11,7 +11,7 @@ export * from './extension';
 export { hasMetaMask, isPolkadotSnapInstalled, isMetamaskSnapsSupported } from './utils';
 
 export async function enablePolkadotSnap(
-  config: SnapConfig = { networkName: 'westend' },
+  config: SnapConfig = { networkName: 'enjin-relaychain' },
   snapOrigin?: string,
   snapInstallationParams: Record<SnapInstallationParamNames, unknown> = {}
 ): Promise<MetamaskPolkadotSnap> {
@@ -25,7 +25,7 @@ export async function enablePolkadotSnap(
     throw new Error("Current Metamask version doesn't support snaps");
   }
   if (!config.networkName) {
-    config.networkName = 'westend';
+    config.networkName = 'enjin-relaychain';
   }
 
   const isInstalled = await isPolkadotSnapInstalled(snapId);

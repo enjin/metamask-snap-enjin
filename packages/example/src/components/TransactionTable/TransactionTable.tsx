@@ -9,7 +9,7 @@ import {
   TableRow
 } from '@material-ui/core';
 import { formatBalance } from '@polkadot/util';
-import type { Transaction } from '@chainsafe/metamask-polkadot-types';
+import type { Transaction } from '@enjin/metamask-enjin-types';
 import { shortAddress } from '../../services/format';
 
 export interface TransactionTableProps {
@@ -43,16 +43,16 @@ export const TransactionTable = (props: TransactionTableProps): React.JSX.Elemen
               <TableCell align="center">{shortAddress(tx.destination)}</TableCell>
               <TableCell align="center">
                 {formatBalance(tx.amount, {
-                  decimals: 12,
+                  decimals: 18,
                   withSi: true,
-                  withUnit: 'KSM'
+                  withUnit: 'ENJ'
                 })}
               </TableCell>
               <TableCell align="center">
                 {formatBalance(tx.fee, {
-                  decimals: 12,
+                  decimals: 18,
                   withSi: true,
-                  withUnit: 'KSM'
+                  withUnit: 'ENJ'
                 })}
               </TableCell>
             </TableRow>

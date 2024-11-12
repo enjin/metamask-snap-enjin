@@ -137,7 +137,7 @@ export interface UnitConfiguration {
   customViewUrl?: string;
 }
 
-export type SupportedSnapNetworks = 'polkadot' | 'kusama' | 'westend' | 'canary-matrixchain';
+export type SupportedSnapNetworks = 'enjin-relaychain' | 'enjin-matrixchain' | 'canary-relaychain' | 'canary-matrixchain';
 
 export type SnapNetworks = SupportedSnapNetworks | string;
 

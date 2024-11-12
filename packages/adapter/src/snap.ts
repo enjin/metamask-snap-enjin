@@ -1,4 +1,4 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 import {
   exportAccount,
   exportSeed,
@@ -26,7 +26,7 @@ export class MetamaskPolkadotSnap {
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
     this.snapId = `${this.pluginOrigin}`;
-    this.config = config || { networkName: 'westend' };
+    this.config = config || { networkName: 'enjin-relaychain' };
   }
 
   public getMetamaskSnapApi = (): MetamaskSnapApi => {

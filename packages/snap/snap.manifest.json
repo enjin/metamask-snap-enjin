@@ -1,18 +1,18 @@
 {
   "version": "0.11.3",
-  "description": "The Polkadot snap.",
-  "proposedName": "Polkadot Wallet",
+  "description": "The Enjin snap.",
+  "proposedName": "Enjin Wallet",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
+    "url": "git+https://github.com/enjin/metamask-snap-enjin.git"
   },
   "source": {
-    "shasum": "zGgdMAh1laeX1N8PoB0KDFPolblXAP9pFWVi4lKKYQ0=",
+    "shasum": "imIert0YBeIz1NVO0oOqfzS3ANqIiJA4LQP6a+9R/7g=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
-        "iconPath": "images/logo.svg",
-        "packageName": "@chainsafe/polkadot-snap",
+        "iconPath": "images/enjin.svg",
+        "packageName": "@enjin/snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
@@ -27,10 +27,7 @@
     "snap_dialog": {},
     "snap_getBip44Entropy": [
       {
-        "coinType": 354
-      },
-      {
-        "coinType": 434
+        "coinType": 1155
       }
     ],
     "snap_manageState": {}

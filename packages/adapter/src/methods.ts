@@ -6,7 +6,7 @@ import type {
   SnapConfig,
   Transaction,
   TxPayload
-} from '@chainsafe/metamask-polkadot-types';
+} from '@enjin/metamask-enjin-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { MetamaskPolkadotSnap } from './snap';
 

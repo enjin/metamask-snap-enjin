@@ -1,8 +1,8 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 
-declare module '@chainsafe/metamask-polkadot-adapter' {
+declare module '@enjin/metamask-enjin-adapter' {
   export function injectMetamaskPolkadotSnapProvider(
-    network: 'westend' | 'kusama',
+    network: 'enjin-relaychain' | 'enjin-matrixchain' | 'canary-relaychain' | 'canary-matrixchain',
     config?: SnapConfig,
     pluginOrigin?: string
   ): void;

@@ -1,11 +1,13 @@
 export function getPolkascanTxUrl(txHash: string, network: string): string {
   switch (network) {
-    case 'kusama':
-      return `https://polkascan.io/kusama/transaction/${txHash}`;
-    case 'westend':
-      return `https://westend.subscan.io/extrinsic/${txHash}`;
+    case 'enjin-relaychain':
+      return `https://enjin.subscan.io/extrinsic/${txHash}`;
+    case 'enjin-matrixchain':
+      return `https://enjin-matrix.subscan.io/extrinsic/${txHash}`;
+    case 'canary-relaychain':
+      return `https://canary.subscan.io/extrinsic/${txHash}`;
     case 'canary-matrixchain':
-      return `https://canary-matrixchain.subscan.io/extrinsic/${txHash}`;
+      return `https://canary-matrix.subscan.io/extrinsic/${txHash}`;
     default:
       return '';
   }

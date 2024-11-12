@@ -1,9 +1,9 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { kusamaConfiguration, westendConfiguration } from '../../../src/configuration/predefined';
+import { enjinMatrixConfiguration, canaryRelayConfiguration } from '../../../src/configuration/predefined';
 import { configure } from '../../../src/rpc/configure';
 import { EmptyMetamaskState } from '../../../src/interfaces';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { SnapConfig } from '@enjin/metamask-enjin-types';
 import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
@@ -21,7 +21,7 @@ describe('Test rpc handler function: configure', function () {
     const result = await configure('kusama', {});
 
     // assertions
-    expect(result).to.be.deep.eq(kusamaConfiguration);
+    expect(result).to.be.deep.eq(enjinMatrixConfiguration);
   });
 
   it('should set predefined westend configuration', async function () {
@@ -29,7 +29,7 @@ describe('Test rpc handler function: configure', function () {
     // tested method
     const result = await configure('westend', {});
     // assertions
-    expect(result).to.be.deep.eq(westendConfiguration);
+    expect(result).to.be.deep.eq(canaryRelayConfiguration);
   });
 
   it('should set custom configuration', async function () {
@@ -51,7 +51,7 @@ describe('Test rpc handler function: configure', function () {
   it('should set predefined kusama configuration with additional property override', async function () {
     walletStub.request.returns(EmptyMetamaskState());
     // tested method
-    const customConfiguration = kusamaConfiguration;
+    const customConfiguration = enjinMatrixConfiguration;
     customConfiguration.unit.symbol = 'TST_KSM';
     const result = await configure('kusama', {
       unit: { symbol: 'TST_KSM' }
