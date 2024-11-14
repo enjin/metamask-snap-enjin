@@ -1,13 +1,13 @@
 {
   "version": "0.11.3",
   "description": "The Enjin snap.",
-  "proposedName": "Enjin Wallet",
+  "proposedName": "Enjin Connect",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/enjin/metamask-snap-enjin.git"
   },
   "source": {
-    "shasum": "imIert0YBeIz1NVO0oOqfzS3ANqIiJA4LQP6a+9R/7g=",
+    "shasum": "nZ65Uirg01SaEVDU1FLWNNwhYcCwhVsWZaG5iDm8C7I=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -17,13 +17,20 @@
       }
     }
   },
+  "initialConnections": {
+    "https://nft.io": {},
+    "https://platform.enjin.io": {},
+    "https://console.enjin.io": {}
+  },
   "initialPermissions": {
     "endowment:rpc": {
       "dapps": true,
       "snaps": true
     },
+    "endowment:page-home": {},
     "endowment:network-access": {},
     "endowment:webassembly": {},
+    "endowment:lifecycle-hooks": {},
     "snap_dialog": {},
     "snap_getBip44Entropy": [
       {

@@ -1,0 +1,13 @@
+export { default as walletIco } from './wallet.svg';
+export { default as coinIco } from './coin.svg';
+export { default as docsIco } from './docs.svg';
+export { default as sendIco } from './send.svg';
+export { default as supportIco } from './support.svg';
+export { default as websiteIco } from './website.svg';
+export { default as twitterIco } from './twitterIco.svg';
+export { default as discordIco } from './discordIco.svg';
+export { default as telegramIco } from './telegramIco.svg';
+export { default as facebookIco } from './facebookIco.svg';
+export { default as redditIco } from './redditIco.svg';
+export { default as instagramIco } from './instagramIco.svg';
+export { default as invisibleIco } from './invisible.svg';
