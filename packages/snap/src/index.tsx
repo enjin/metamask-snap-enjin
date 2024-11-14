@@ -15,7 +15,7 @@ import {
   Icon,
   Image
 } from '@metamask/snaps-sdk/jsx';
-import type { OnHomePageHandler, OnUserInputHandler } from '@metamask/snaps-sdk';
+import type { OnHomePageHandler, OnUserInputHandler, OnInstallHandler } from '@metamask/snaps-sdk';
 import { assert } from 'superstruct';
 import type { MetamaskState } from './interfaces';
 import { EmptyMetamaskState } from './interfaces';
@@ -44,14 +44,18 @@ import { getConfiguration } from './configuration';
 import {
   discordIco,
   docsIco,
-  facebookIco, instagramIco, invisibleIco, redditIco,
+  facebookIco,
+  instagramIco,
+  invisibleIco,
+  redditIco,
   sendIco,
   supportIco,
   telegramIco,
   twitterIco,
   websiteIco
-} from "./ui/images";
-import { redirectDialog } from "./redirectDialog";
+} from './ui/images';
+import { redirectDialog } from './redirectDialog';
+import { welcomeScreen } from './welcomeScreen';
 
 const apiDependentMethods = [
   'getBlock',
@@ -151,13 +155,28 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
 };
 
 /**
+ * Handle installation of the snap. This handler is called when the snap is
+ * installed.
+ */
+export const onInstall: OnInstallHandler = async () => {
+  await snap.request({
+    method: 'snap_dialog',
+    params: {
+      type: 'alert',
+      content: welcomeScreen()
+    }
+  });
+};
+
+/**
  * Handle incoming home page requests from the MetaMask clients.
  *
  * @returns A static panel rendered with custom UI.
  */
+// eslint-disable-next-line @typescript-eslint/require-await
 export const onHomePage: OnHomePageHandler = async () => {
   return {
-    content: homePage(),
+    content: homePage()
   };
 };
 
@@ -278,4 +297,4 @@ const homePage = () => {
       </Box>
     </Box>
   );
-}
+};
