@@ -28,10 +28,6 @@ export async function getKeyPair(): Promise<KeyringPair> {
 
 export const getCoinTypeByNetwork = (network: SnapNetworks): number => {
   switch (network) {
-    // case 'enjin-relaychain':
-    // case 'enjin-matrixchain':
-    // case 'canary-relaychain':
-    // case 'canary-matrixchain':
     default:
       return 1155;
   }

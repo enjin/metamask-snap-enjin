@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { getBalance } from '../../../../src/rpc/substrate/getBalance';
+import { getBalances } from '../../../../src/rpc/substrate/getBalances';
 import { ApiPromise } from '@polkadot/api/';
 import { AccountInfo } from '@polkadot/types/interfaces/system';
 import sinon from 'sinon';
@@ -25,7 +25,7 @@ describe('Test rpc handler function: getBalance', function () {
     const apiStub = { query: { system: { account: sinon.stub() } } };
     apiStub.query.system.account.returns({ data: { free: '0' } } as unknown as AccountInfo);
     const api = apiStub as unknown as ApiPromise;
-    const result = await getBalance(api);
+    const result = await getBalances(api);
     expect(result).to.be.eq('0');
     expect(apiStub.query.system.account).to.have.been.calledOnceWith(testAddress);
   });

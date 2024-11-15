@@ -11,13 +11,13 @@ import {
 export function getDefaultConfiguration(networkName: string): SnapConfig {
   switch (networkName) {
     case 'enjin-relaychain':
-      console.log('Polkadot configuration selected');
+      console.log('Enjin Relaychain configuration selected');
       return enjinRelayConfiguration;
     case 'enjin-matrixchain':
-      console.log('Kusama configuration selected');
+      console.log('Enjin Matrixchain configuration selected');
       return enjinMatrixConfiguration;
     case 'canary-relaychain':
-      console.log('Westend configuration selected');
+      console.log('Canary Relaychain configuration selected');
       return canaryRelayConfiguration;
     case 'canary-matrixchain':
       console.log('Canary Matrixchain configuration selected');

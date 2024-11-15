@@ -1,6 +1,7 @@
 import type { ApiPromise } from '@polkadot/api/promise';
 import type { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { UserInputEventType } from '@metamask/snaps-sdk';
+import { BN } from '@polkadot/util';
+import { InputChangeEvent, UserInputEventType } from "@metamask/snaps-sdk";
 import {
   Box,
   Dropdown,
@@ -21,7 +22,7 @@ import type { MetamaskState } from './interfaces';
 import { EmptyMetamaskState } from './interfaces';
 import { getPublicKey } from './rpc/getPublicKey';
 import { exportSeed } from './rpc/exportSeed';
-import { getBalance } from './rpc/substrate/getBalance';
+import { getBalances } from './rpc/substrate/getBalances';
 import { getAddress } from './rpc/getAddress';
 import { getTransactions } from './rpc/substrate/getTransactions';
 import { getBlock } from './rpc/substrate/getBlock';
@@ -56,6 +57,9 @@ import {
 } from './ui/images';
 import { redirectDialog } from './redirectDialog';
 import { welcomeScreen } from './welcomeScreen';
+import { setConfiguration } from "@enjin/metamask-enjin-adapter/build/methods";
+import { AccountData } from "@polkadot/types/interfaces/balances/types";
+import getPrice from "./getPrices";
 
 const apiDependentMethods = [
   'getBlock',
@@ -108,7 +112,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       assert(request.params, validGetBlockSchema);
       return await getBlock(request.params.blockTag, api);
     case 'getBalance': {
-      return await getBalance(api);
+      return await getBalances(api);
     }
     case 'getConfiguration':
       return await getConfiguration();
@@ -159,11 +163,13 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
  * installed.
  */
 export const onInstall: OnInstallHandler = async () => {
+  const address = await getAddress();
+
   await snap.request({
     method: 'snap_dialog',
     params: {
       type: 'alert',
-      content: welcomeScreen()
+      content: welcomeScreen(address)
     }
   });
 };
@@ -173,10 +179,16 @@ export const onInstall: OnInstallHandler = async () => {
  *
  * @returns A static panel rendered with custom UI.
  */
-// eslint-disable-next-line @typescript-eslint/require-await
 export const onHomePage: OnHomePageHandler = async () => {
+  const address = await getAddress();
+  const api = await getApi();
+  const balances = await getBalances(api, address);
+  const price: string = await getPrice();
+  console.log(balances);
+  console.log(price);
+
   return {
-    content: homePage()
+    content: homePage(address, balances, price)
   };
 };
 
@@ -186,6 +198,25 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
     event.type === UserInputEventType.InputChangeEvent
   ) {
     switch (event.name) {
+      case 'switchNetwork': {
+        console.log(event);
+        const { value } = event as InputChangeEvent;
+        await resetApi();
+        await configure(value as string, {});
+        const address = await getAddress();
+        const api = await getApi();
+        const balances = await getBalances(api, address);
+        const price: string = await getPrice();
+        await snap.request({
+          method: 'snap_updateInterface',
+          params: {
+            id,
+            ui: homePage(address, balances, price)
+          }
+        });
+
+        break;
+      }
       case 'send':
         await redirectDialog(id, 'send');
         break;
@@ -199,11 +230,15 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
         await redirectDialog(id, 'support');
         break;
       case 'back': {
+        const address = await getAddress();
+        const api = await getApi();
+        const balances = await getBalances(api, address);
+        const price: string = await getPrice();
         await snap.request({
           method: 'snap_updateInterface',
           params: {
             id,
-            ui: homePage()
+            ui: homePage(address, balances, price)
           }
         });
         break;
@@ -215,7 +250,20 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const homePage = () => {
+const homePage = (address: string, balances: AccountData, usd: string) => {
+  console.log('Free:', balances.free.toBigInt());
+  console.log('Reserved:', balances.reserved.toBigInt());
+  const decimals = new BN('1000000000000000000');
+  const price = Number(usd);
+  console.log('Price:', price);
+
+  const freeBalance = balances.free.toBn().div(decimals).toNumber().toFixed(2);
+  const freeUsd = (balances.free.toBn().div(decimals).toNumber() * price).toFixed(2);
+  const reservedBalance = balances.reserved.toBn().div(decimals).toNumber().toFixed(2);
+  const reservedUsd = (balances.reserved.toBn().div(decimals).toNumber() * price).toFixed(2);
+  const totalBalance = balances.free.toBn().add(balances.reserved.toBn()).div(decimals).toNumber().toFixed(2);
+  const totalUsd = (balances.free.toBn().add(balances.reserved.toBn()).div(decimals).toNumber() * price).toFixed(2);
+
   return (
     <Box>
       <Section>
@@ -223,13 +271,13 @@ const homePage = () => {
           <Icon name="wallet" size="md" />
           <Heading>Address</Heading>
         </Box>
-        <Dropdown name="network">
+        <Dropdown name="switchNetwork">
           <Option value="enjin-relaychain">Enjin Relaychain</Option>
           <Option value="enjin-matrixchain">Enjin Matrixchain</Option>
           <Option value="canary-relaychain">Canary Relaychain</Option>
           <Option value="canary-matrixchain">Canary Relaychain</Option>
         </Dropdown>
-        <Copyable value="en14snRzuoneign3keoddksliniu45j5kglrkot3p4m5mltrj922k" />
+        <Copyable value={address} />
       </Section>
       <Section>
         <Box direction="horizontal" alignment="start">
@@ -237,13 +285,13 @@ const homePage = () => {
           <Heading>Balance</Heading>
         </Box>
         <Row label="Total">
-          <Value value="0 ENJ" extra="$0.00" />
+          <Value value={totalBalance + ' ENJ'} extra={'$' + totalUsd} />
         </Row>
         <Row label="Transferable">
-          <Value value="0 ENJ" extra="$0.00" />
+          <Value value={freeBalance + ' ENJ'} extra={'$' + freeUsd} />
         </Row>
         <Row label="Reserved">
-          <Value value="0 ENJ" extra="$0.00" />
+          <Value value={reservedBalance + ' ENJ'} extra={'$' + reservedUsd} />
         </Row>
       </Section>
       <Box direction="horizontal" alignment="space-around">
