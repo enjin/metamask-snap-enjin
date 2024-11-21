@@ -62,7 +62,7 @@ export const Account = (props: AccountProps): React.JSX.Element => {
             <Typography variant="h6">ACCOUNT BALANCE:</Typography>
             <Typography variant="subtitle2">
               {formatBalance(props.balance, {
-                decimals: 12,
+                decimals: 18,
                 withSi: true,
                 withUnit: getCurrency(props.network)
               })}

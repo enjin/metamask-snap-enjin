@@ -18,7 +18,6 @@ import type {
   SupportedSnapNetworks
 } from '@enjin/metamask-enjin-types';
 import type { MetamaskSnapApi } from '@enjin/metamask-enjin-adapter/src/types';
-import { BN } from '@polkadot/util';
 import { Transfer } from '../../components/Transfer/Transfer';
 import { SignMessage } from '../../components/SignMessage/SignMessage';
 import { TransactionTable } from '../../components/TransactionTable/TransactionTable';
@@ -111,12 +110,11 @@ export const Dashboard = (): React.JSX.Element => {
   useEffect(() => {
     void (async () => {
       if (api) {
-        const balances = new BN((await api.getBalances()).free ?? '0');
-        const decimals = new BN('1000000000000000000');
+        const balances = await api.getBalances();
 
         setAddress(await api.getAddress());
         setPublicKey(await api.getPublicKey());
-        setBalance(balances.div(decimals).toString());
+        setBalance(balances.free);
         setLatestBlock(await api.getLatestBlock());
         setTransactions(await api.getAllTransactions());
       }
@@ -127,10 +125,9 @@ export const Dashboard = (): React.JSX.Element => {
     // periodically check balance
     const interval = setInterval(async () => {
       if (api) {
-        const balances = new BN((await api.getBalances()).free ?? '0');
-        const decimals = new BN('1000000000000000000');
+        const balances = await api.getBalances();
 
-        setBalance(balances.div(decimals).toString());
+        setBalance(balances.free);
       }
     }, 60000); // every 60 seconds
     return () => clearInterval(interval);
