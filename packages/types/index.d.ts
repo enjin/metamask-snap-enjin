@@ -30,8 +30,8 @@ export interface GetBlockRequest {
   };
 }
 
-export interface GetBalanceRequest {
-  method: 'getBalance';
+export interface GetBalancesRequest {
+  method: 'getBalances';
 }
 
 export interface GetConfigurationRequest {
@@ -90,7 +90,7 @@ export type MetamaskPolkadotRpcRequest =
   | ExportAccountRequest
   | GetTransactionsRequest
   | GetBlockRequest
-  | GetBalanceRequest
+  | GetBalancesRequest
   | GetConfigurationRequest
   | ConfigureSnapRequest
   | AddPolkadotAssetRequest
@@ -123,6 +123,11 @@ export type BlockId = number | string | 'latest';
 export interface TxPayload {
   tx: string;
   payload: SignerPayloadJSON;
+}
+
+export interface AccountData {
+  free: string;
+  reserved: string;
 }
 
 export interface BlockInfo {

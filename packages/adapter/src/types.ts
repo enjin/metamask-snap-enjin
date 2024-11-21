@@ -1,4 +1,5 @@
 import type {
+  AccountData,
   BlockInfo,
   SnapConfig,
   SnapRpcMethodRequest,
@@ -14,7 +15,7 @@ export interface MetamaskSnapApi {
 
   getPublicKey(): Promise<string>;
 
-  getBalance(): Promise<string>;
+  getBalances(): Promise<AccountData>;
 
   exportSeed(): Promise<string>;
 

@@ -22,7 +22,7 @@ import type { MetamaskState } from './interfaces';
 import { EmptyMetamaskState } from './interfaces';
 import { getPublicKey } from './rpc/getPublicKey';
 import { exportSeed } from './rpc/exportSeed';
-import { getBalances } from './rpc/substrate/getBalances';
+import { getBalances, IAccountData } from "./rpc/substrate/getBalances";
 import { getAddress } from './rpc/getAddress';
 import { getTransactions } from './rpc/substrate/getTransactions';
 import { getBlock } from './rpc/substrate/getBlock';
@@ -58,12 +58,11 @@ import {
 import { redirectDialog } from './redirectDialog';
 import { welcomeScreen } from './welcomeScreen';
 import { setConfiguration } from "@enjin/metamask-enjin-adapter/build/methods";
-import { AccountData } from "@polkadot/types/interfaces/balances/types";
 import getPrice from "./getPrices";
 
 const apiDependentMethods = [
   'getBlock',
-  'getBalance',
+  'getBalances',
   'getChainHead',
   'signPayloadJSON',
   'signPayloadRaw',
@@ -111,7 +110,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
     case 'getBlock':
       assert(request.params, validGetBlockSchema);
       return await getBlock(request.params.blockTag, api);
-    case 'getBalance': {
+    case 'getBalances': {
       return await getBalances(api);
     }
     case 'getConfiguration':
@@ -250,19 +249,18 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const homePage = (address: string, balances: AccountData, usd: string) => {
-  console.log('Free:', balances.free.toBigInt());
-  console.log('Reserved:', balances.reserved.toBigInt());
+const homePage = (address: string, balances: { reserved: string; free: string }, usd: string) => {
+  const free = new BN(balances.free);
+  const reserved = new BN(balances.reserved);
   const decimals = new BN('1000000000000000000');
   const price = Number(usd);
-  console.log('Price:', price);
 
-  const freeBalance = balances.free.toBn().div(decimals).toNumber().toFixed(2);
-  const freeUsd = (balances.free.toBn().div(decimals).toNumber() * price).toFixed(2);
-  const reservedBalance = balances.reserved.toBn().div(decimals).toNumber().toFixed(2);
-  const reservedUsd = (balances.reserved.toBn().div(decimals).toNumber() * price).toFixed(2);
-  const totalBalance = balances.free.toBn().add(balances.reserved.toBn()).div(decimals).toNumber().toFixed(2);
-  const totalUsd = (balances.free.toBn().add(balances.reserved.toBn()).div(decimals).toNumber() * price).toFixed(2);
+  const freeBalance = free.div(decimals).toNumber().toFixed(2);
+  const freeUsd = (free.div(decimals).toNumber() * price).toFixed(2);
+  const reservedBalance = reserved.div(decimals).toNumber().toFixed(2);
+  const reservedUsd = (reserved.div(decimals).toNumber() * price).toFixed(2);
+  const totalBalance = free.add(reserved).div(decimals).toNumber().toFixed(2);
+  const totalUsd = (free.add(reserved).div(decimals).toNumber() * price).toFixed(2);
 
   return (
     <Box>

@@ -110,9 +110,11 @@ export const Dashboard = (): React.JSX.Element => {
   useEffect(() => {
     void (async () => {
       if (api) {
+        const balances = await api.getBalances();
+
         setAddress(await api.getAddress());
         setPublicKey(await api.getPublicKey());
-        setBalance(await api.getBalance());
+        setBalance(balances.free);
         setLatestBlock(await api.getLatestBlock());
         setTransactions(await api.getAllTransactions());
       }
@@ -123,8 +125,9 @@ export const Dashboard = (): React.JSX.Element => {
     // periodically check balance
     const interval = setInterval(async () => {
       if (api) {
-        const newBalance = await api.getBalance();
-        setBalance(newBalance);
+        const balances = await api.getBalances();
+
+        setBalance(balances.free);
       }
     }, 60000); // every 60 seconds
     return () => clearInterval(interval);

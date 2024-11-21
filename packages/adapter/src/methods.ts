@@ -1,4 +1,5 @@
 import type {
+  AccountData,
   BlockInfo,
   MetamaskPolkadotRpcRequest,
   SignPayloadJSONRequest,
@@ -6,7 +7,7 @@ import type {
   SnapConfig,
   Transaction,
   TxPayload
-} from '@enjin/metamask-enjin-types';
+} from "@enjin/metamask-enjin-types";
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { MetamaskPolkadotSnap } from './snap';
 
@@ -54,8 +55,13 @@ export async function signPayloadRaw(
   return (await sign.bind(this)('signPayloadRaw', payload)).signature;
 }
 
-export async function getBalance(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({ method: 'getBalance' }, this.snapId)) as string;
+export async function getBalances(this: MetamaskPolkadotSnap): Promise<AccountData> {
+  try {
+    return (await sendSnapMethod({ method: 'getBalances' }, this.snapId)) as AccountData;
+  } catch (e) {
+    console.log('Unable to fetch balances', e);
+    return { free: '0', reserved: '0' };
+  }
 }
 
 export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
