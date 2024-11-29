@@ -1,4 +1,4 @@
-import { Address, Box, Copyable, Divider, Row, Text } from '@metamask/snaps-sdk/jsx';
+import { Address, Box, Copyable, Divider, Row, Section, Text } from '@metamask/snaps-sdk/jsx';
 import { panel, text } from '@metamask/snaps-ui';
 
 type RawDialogContent = {
@@ -68,15 +68,16 @@ export async function showJSONPayloadDialog(message: JSONDialogContent): Promise
           </Row>
           {message.info.map((info) => {
             return typeof info.value === 'object' ? (
-              <Box>
+              <Section>
                 <Text>{info.message}</Text>
                 <Divider />
                 {Object.entries(info.value).map(([key, value]) => (
-                  <Row label={key}>
+                  <Box alignment="start" direction="vertical">
+                    <Text>{key}</Text>
                     <Text>{value}</Text>
-                  </Row>
+                  </Box>
                 ))}
-              </Box>
+              </Section>
             ) : (
               <Row label={info.message}>
                 <Text>{info.value}</Text>
