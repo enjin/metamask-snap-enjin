@@ -1,34 +1,35 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { ApiPromise } from '@polkadot/api/';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { getKeyPair } from '../../polkadot/account';
-import { showConfirmationDialog } from '../../util/confirmation';
-import { messageCreator } from '../../util/messageCreator';
+import { showRawPayloadDialog, showJSONPayloadDialog } from '../../util/confirmation';
 
 export async function signPayloadJSON(
   api: ApiPromise,
   payload: SignerPayloadJSON
 ): Promise<{ signature: string } | void> {
   const keyPair = await getKeyPair();
-  const confirmation = await showConfirmationDialog({
-    description: `It will be signed with address: ${keyPair.address}`,
-    prompt: `Do you want to sign this message?`,
-    textAreaContent: messageCreator([
-      { message: 'address', value: payload.address },
-      { message: 'tip', value: payload.tip },
-      { message: 'block number', value: payload.blockNumber },
-      { message: 'block hash', value: payload.blockHash },
-      { message: 'genesis hash', value: payload.genesisHash },
-      { message: 'era', value: payload.era },
-      { message: 'nonce', value: payload.nonce },
-      { message: 'spec version', value: payload.specVersion },
-      { message: 'transaction version', value: payload.transactionVersion }
-    ])
+  const extrinsic = api.registry.createType('ExtrinsicPayload', payload, {
+    version: payload.version
+  });
+
+  const method = api.registry.createType('Call', extrinsic.method);
+
+  const confirmation = await showJSONPayloadDialog({
+    address: `polkadot:${api.genesisHash.toString().slice(2, 34)}:${keyPair.address}`,
+    prompt: `Do you want to sign this transaction?`,
+    info: [
+      { message: 'chain', value: api.runtimeChain.toString() },
+      { message: 'version', value: extrinsic.specVersion.toString() },
+      { message: 'nonce', value: extrinsic.nonce.toString() },
+      { message: 'tip', value: extrinsic.tip.toString() },
+      { message: 'method', value: `${method.section}.${method.method}` },
+      { message: 'args', value: method.toHuman().args as Record<string, string> },
+    ]
   });
   if (confirmation) {
-    const extrinsic = api.registry.createType('ExtrinsicPayload', payload, {
-      version: payload.version
-    });
     return extrinsic.sign(keyPair);
   }
 }
@@ -38,9 +39,8 @@ export async function signPayloadRaw(
   payload: SignerPayloadRaw
 ): Promise<{ signature: string } | void> {
   const keyPair = await getKeyPair();
-  // ask for confirmation
-  const confirmation = await showConfirmationDialog({
-    description: `It will be signed with address: ${keyPair.address}`,
+  const confirmation = await showRawPayloadDialog({
+    address: `polkadot:${api.genesisHash.toString().slice(2, 34)}:${keyPair.address}`,
     prompt: `Do you want to sign this message?`,
     textAreaContent: payload.data
   });

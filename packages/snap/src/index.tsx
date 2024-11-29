@@ -1,7 +1,7 @@
 import type { ApiPromise } from '@polkadot/api/promise';
 import type { OnRpcRequestHandler } from '@metamask/snaps-types';
 import { BN } from '@polkadot/util';
-import { InputChangeEvent, UserInputEventType } from "@metamask/snaps-sdk";
+import { UserInputEventType } from '@metamask/snaps-sdk';
 import {
   Box,
   Dropdown,
@@ -16,13 +16,18 @@ import {
   Icon,
   Image
 } from '@metamask/snaps-sdk/jsx';
-import type { OnHomePageHandler, OnUserInputHandler, OnInstallHandler } from '@metamask/snaps-sdk';
+import type {
+  OnHomePageHandler,
+  OnUserInputHandler,
+  OnInstallHandler,
+  InputChangeEvent
+} from '@metamask/snaps-sdk';
 import { assert } from 'superstruct';
 import type { MetamaskState } from './interfaces';
 import { EmptyMetamaskState } from './interfaces';
 import { getPublicKey } from './rpc/getPublicKey';
 import { exportSeed } from './rpc/exportSeed';
-import { getBalances, IAccountData } from "./rpc/substrate/getBalances";
+import { getBalances } from './rpc/substrate/getBalances';
 import { getAddress } from './rpc/getAddress';
 import { getTransactions } from './rpc/substrate/getTransactions';
 import { getBlock } from './rpc/substrate/getBlock';
@@ -57,8 +62,7 @@ import {
 } from './ui/images';
 import { redirectDialog } from './redirectDialog';
 import { welcomeScreen } from './welcomeScreen';
-import { setConfiguration } from "@enjin/metamask-enjin-adapter/build/methods";
-import getPrice from "./getPrices";
+import getPrice from './getPrices';
 
 const apiDependentMethods = [
   'getBlock',

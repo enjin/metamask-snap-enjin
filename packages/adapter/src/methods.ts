@@ -7,7 +7,7 @@ import type {
   SnapConfig,
   Transaction,
   TxPayload
-} from "@enjin/metamask-enjin-types";
+} from '@enjin/metamask-enjin-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { MetamaskPolkadotSnap } from './snap';
 
@@ -15,7 +15,6 @@ async function sendSnapMethod(
   request: MetamaskPolkadotRpcRequest,
   snapId: string
 ): Promise<unknown> {
-  console.info('sendSnapMethod', request, snapId);
   return await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: {
