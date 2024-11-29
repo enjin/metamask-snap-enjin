@@ -1,6 +1,6 @@
 import type { ApiPromise } from '@polkadot/api/';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import { hexToU8a, u8aToHex } from '@polkadot/util';
+import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { getKeyPair } from '../../polkadot/account';
 import { showConfirmationDialog } from '../../util/confirmation';
 import { messageCreator } from '../../util/messageCreator';
@@ -46,7 +46,7 @@ export async function signPayloadRaw(
   });
   // return seed if user confirmed action
   if (confirmation) {
-    const signedBytes = keyPair.sign(hexToU8a(payload.data));
+    const signedBytes = keyPair.sign(stringToU8a(payload.data));
     return {
       signature: u8aToHex(signedBytes)
     };

@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build:snap": "yarn workspace @enjin/snap build",
-    "build:adapter": "yarn workspace @enjin/metamask-polkadot-adapter build",
+    "build:adapter": "yarn workspace @enjin/metamask-enjin-adapter build",
     "start:snap": "yarn workspace @enjin/snap serve",
     "start:example": "yarn workspace example start",
     "predemo": "yarn run build:snap && yarn run build:adapter",
@@ -28,7 +28,7 @@
     "prettier": "^3.0.2",
     "typescript": "4.7.3"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.5.3",
   "dependencies": {
     "@rushstack/eslint-patch": "^1.3.3"
   }
