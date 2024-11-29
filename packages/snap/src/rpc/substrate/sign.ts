@@ -27,10 +27,13 @@ export async function signPayloadJSON(
       { message: 'tip', value: extrinsic.tip.toString() },
       {
         message: 'method',
-        value: `${method.section}.${method.method}`,
-        tooltip: method.meta?.docs?.at(0)?.toString()
+        value: `${method.section}.${method.method}`
       },
-      { message: 'arguments', value: method.toHuman().args as Record<string, string> }
+      { message: 'arguments', value: method.toHuman().args as Record<string, string> },
+      {
+        message: 'info',
+        value: method.meta?.docs.join(' ')
+      }
     ]
   });
   if (confirmation) {

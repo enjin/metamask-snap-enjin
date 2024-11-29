@@ -6,8 +6,7 @@ import {
   Heading,
   Row,
   Section,
-  Text,
-  Tooltip
+  Text
 } from '@metamask/snaps-sdk/jsx';
 import { panel, text } from '@metamask/snaps-ui';
 
@@ -20,7 +19,7 @@ type RawDialogContent = {
 type JSONDialogContent = {
   prompt: string;
   address: `${string}:${string}:${string}`;
-  info: { message: string; value: string | Record<string, string>; tooltip?: string }[];
+  info: { message: string; value: string | Record<string, string> }[];
 };
 
 type ConfirmationDialogContent = {
@@ -90,13 +89,7 @@ export async function showJSONPayloadDialog(message: JSONDialogContent): Promise
               </Section>
             ) : (
               <Row label={info.message}>
-                {info.tooltip ? (
-                  <Tooltip content={<Text>{info.tooltip}</Text>}>
-                    <Text>{info.value}</Text>
-                  </Tooltip>
-                ) : (
-                  <Text>{info.value}</Text>
-                )}
+                <Text>{info.value}</Text>
               </Row>
             );
           })}
