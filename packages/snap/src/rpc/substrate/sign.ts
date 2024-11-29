@@ -25,8 +25,12 @@ export async function signPayloadJSON(
       { message: 'version', value: extrinsic.specVersion.toString() },
       { message: 'nonce', value: extrinsic.nonce.toString() },
       { message: 'tip', value: extrinsic.tip.toString() },
-      { message: 'method', value: `${method.section}.${method.method}` },
-      { message: 'args', value: method.toHuman().args as Record<string, string> },
+      {
+        message: 'method',
+        value: `${method.section}.${method.method}`,
+        tooltip: method.meta?.docs?.at(0)?.toString()
+      },
+      { message: 'arguments', value: method.toHuman().args as Record<string, string> }
     ]
   });
   if (confirmation) {

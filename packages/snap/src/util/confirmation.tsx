@@ -1,4 +1,14 @@
-import { Address, Box, Copyable, Divider, Row, Section, Text } from '@metamask/snaps-sdk/jsx';
+import {
+  Address,
+  Box,
+  Copyable,
+  Divider,
+  Heading,
+  Row,
+  Section,
+  Text,
+  Tooltip
+} from '@metamask/snaps-sdk/jsx';
 import { panel, text } from '@metamask/snaps-ui';
 
 type RawDialogContent = {
@@ -10,7 +20,7 @@ type RawDialogContent = {
 type JSONDialogContent = {
   prompt: string;
   address: `${string}:${string}:${string}`;
-  info: { message: string; value: string | Record<string, string> }[];
+  info: { message: string; value: string | Record<string, string>; tooltip?: string }[];
 };
 
 type ConfirmationDialogContent = {
@@ -69,7 +79,7 @@ export async function showJSONPayloadDialog(message: JSONDialogContent): Promise
           {message.info.map((info) => {
             return typeof info.value === 'object' ? (
               <Section>
-                <Text>{info.message}</Text>
+                <Heading>{info.message}</Heading>
                 <Divider />
                 {Object.entries(info.value).map(([key, value]) => (
                   <Box alignment="start" direction="vertical">
@@ -80,7 +90,13 @@ export async function showJSONPayloadDialog(message: JSONDialogContent): Promise
               </Section>
             ) : (
               <Row label={info.message}>
-                <Text>{info.value}</Text>
+                {info.tooltip ? (
+                  <Tooltip content={<Text>{info.tooltip}</Text>}>
+                    <Text>{info.value}</Text>
+                  </Tooltip>
+                ) : (
+                  <Text>{info.value}</Text>
+                )}
               </Row>
             );
           })}
