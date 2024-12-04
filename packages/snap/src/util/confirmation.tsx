@@ -8,7 +8,6 @@ import {
   Section,
   Text
 } from '@metamask/snaps-sdk/jsx';
-import { panel, text } from '@metamask/snaps-ui';
 
 type RawDialogContent = {
   prompt: string;
@@ -32,11 +31,14 @@ export async function showConfirmationDialog(message: ConfirmationDialogContent)
   return (await snap.request({
     method: 'snap_dialog',
     params: {
-      content: panel([
-        text(message.prompt || 'Are you sure?'),
-        text(message.description || ''),
-        text(message.textAreaContent || '')
-      ]),
+      content: (
+        <Box>
+          <Text>{message.prompt || 'Are you sure?'}</Text>
+          <Divider />
+          <Text>{message.description}</Text>
+          <Copyable value={message.textAreaContent}></Copyable>
+        </Box>
+      ),
       type: 'confirmation'
     }
   })) as boolean;

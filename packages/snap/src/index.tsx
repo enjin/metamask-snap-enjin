@@ -202,7 +202,6 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
   ) {
     switch (event.name) {
       case 'switchNetwork': {
-        console.log(event);
         const { value } = event as InputChangeEvent;
         await resetApi();
         await configure(value as string, {});
