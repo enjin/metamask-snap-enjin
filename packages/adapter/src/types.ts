@@ -17,10 +17,6 @@ export interface MetamaskSnapApi {
 
   getBalances(): Promise<AccountData>;
 
-  exportSeed(): Promise<string>;
-
-  exportAccount(jsonPassphrase?: string): Promise<string>;
-
   getLatestBlock(): Promise<BlockInfo>;
 
   getConfiguration(): Promise<SnapConfig>;

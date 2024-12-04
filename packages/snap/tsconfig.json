@@ -4,10 +4,7 @@
   },
   "compilerOptions": {
     "module": "CommonJS",
-    "lib": [
-      "DOM",
-      "ES2020"
-    ],
+    "lib": ["DOM", "ES2020"],
     "esModuleInterop": true,
     "noImplicitAny": true,
     "strictFunctionTypes": true,
@@ -29,22 +26,10 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@metamask/snaps-sdk",
     "paths": {
-      "*": [
-        "../../node_modules"
-      ]
+      "*": ["../../node_modules"]
     },
     "outDir": "./build",
-    "typeRoots": [
-      "../../node_modules/@types"
-    ]
+    "typeRoots": ["../../node_modules/@types"]
   },
-  "include": [
-    "src/**/*",
-    "test/**/*",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "files": [
-    "../../node_modules/@metamask/snaps-types/dist/types/global.d.ts"
-  ]
+  "include": ["src/**/*", "test/**/*", "**/*.ts", "**/*.tsx"]
 }

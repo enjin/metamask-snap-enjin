@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type {
   AccountData,
   BlockInfo,
@@ -69,20 +70,6 @@ export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
 
 export async function getPublicKey(this: MetamaskPolkadotSnap): Promise<string> {
   return (await sendSnapMethod({ method: 'getPublicKey' }, this.snapId)) as string;
-}
-
-export async function exportSeed(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({ method: 'exportSeed' }, this.snapId)) as string;
-}
-
-export async function exportAccount(
-  this: MetamaskPolkadotSnap,
-  jsonPassphrase?: string
-): Promise<string> {
-  return (await sendSnapMethod(
-    { method: 'exportAccount', params: { jsonPassphrase } },
-    this.snapId
-  )) as string;
 }
 
 export async function getConfiguration(this: MetamaskPolkadotSnap): Promise<SnapConfig> {

@@ -5,7 +5,7 @@ import {
   enjinMatrixConfiguration,
   enjinRelayConfiguration,
   canaryRelayConfiguration,
-  canaryMatrixConfiguration,
+  canaryMatrixConfiguration
 } from './predefined';
 
 export function getDefaultConfiguration(networkName: string): SnapConfig {

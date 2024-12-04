@@ -11,7 +11,7 @@ export function hasMetaMask(): boolean {
   return window.ethereum.isMetaMask;
 }
 
-export const defaultSnapId = 'local:http://localhost:8081';
+export const defaultSnapId = 'local:http://localhost:8080';
 
 export async function installPolkadotSnap(): Promise<boolean> {
   const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;

@@ -1,8 +1,8 @@
 {
   "name": "@enjin/snap",
-  "version": "0.11.3",
+  "version": "0.1.0",
   "description": "MetaMask snap for interacting with Enjin dApps",
-  "main": "build/index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "lint": "yarn run lint:types && yarn run lint:style",
     "lint:types": "tsc --noEmit --pretty",
@@ -23,7 +23,7 @@
     "watch:tsc": "yarn run build:tsc --watch",
     "watch:snap": "mm-snap watch",
     "prepublish": "yarn run build && mkdir ipfs && cp package.json ipfs/package.json",
-    "publish": "export BUNDLE_URL=`ipd --no-clipboard -O -p infura dist/bundle.js` && sed -i 's/http:\\/\\/localhost:8081\\/dist\\/bundle.js/https:\\/\\/ipfs.infura.io\\/ipfs\\/'\"$BUNDLE_URL\"'/g' ipfs/package.json && ipd --no-clipboard -O -p infura ipfs/package.json",
+    "publish": "export BUNDLE_URL=`ipd --no-clipboard -O -p infura dist/bundle.js` && sed -i 's/http:\\/\\/localhost:8080\\/dist\\/bundle.js/https:\\/\\/ipfs.infura.io\\/ipfs\\/'\"$BUNDLE_URL\"'/g' ipfs/package.json && ipd --no-clipboard -O -p infura ipfs/package.json",
     "postpublish": "rm -rf ipfs",
     "serve": "mm-snap serve",
     "test": "yarn run test:unit",
@@ -50,7 +50,7 @@
   "web3Wallet": {
     "bundle": {
       "local": "dist/bundle.js",
-      "url": "http://localhost:8081/dist/bundle.js"
+      "url": "http://localhost:8080/dist/bundle.js"
     },
     "initialPermissions": {
       "alert": {},
@@ -82,7 +82,6 @@
   "dependencies": {
     "@metamask/key-tree": "^9.1.2",
     "@metamask/snaps-sdk": "^6.10.0",
-    "@metamask/snaps-types": "^3.1.0",
     "@metamask/snaps-ui": "^3.1.0",
     "@polkadot/api": "^12.4.2",
     "@polkadot/keyring": "^13.0.2",

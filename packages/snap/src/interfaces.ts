@@ -1,4 +1,4 @@
-import type { Json } from '@metamask/snaps-types';
+import type { Json } from '@metamask/snaps-sdk';
 
 export type MetamaskState = {
   config: Json;

@@ -1,7 +1,5 @@
 import type { SnapConfig } from '@enjin/metamask-enjin-types';
 import {
-  exportAccount,
-  exportSeed,
   generateTransactionPayload,
   getAddress,
   getAllTransactions,
@@ -31,8 +29,6 @@ export class MetamaskPolkadotSnap {
 
   public getMetamaskSnapApi = (): MetamaskSnapApi => {
     return {
-      exportSeed: exportSeed.bind(this),
-      exportAccount: exportAccount.bind(this),
       generateTransactionPayload: generateTransactionPayload.bind(this),
       getAddress: getAddress.bind(this),
       getAllTransactions: getAllTransactions.bind(this),

@@ -51,7 +51,8 @@ describe('Test configuration functions', function () {
       const customConfiguration: SnapConfig = {
         addressPrefix: 5,
         networkName: 'westend',
-        wsRpcUrl: 'url'
+        wsRpcUrl: 'url',
+        genesisHash: '0xhash',
       };
       walletStub.request.returns({ config: JSON.stringify(customConfiguration) });
       const configuration = await getConfiguration();

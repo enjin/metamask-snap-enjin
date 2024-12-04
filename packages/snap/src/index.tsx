@@ -1,5 +1,12 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import type { ApiPromise } from '@polkadot/api/promise';
-import type { OnRpcRequestHandler } from '@metamask/snaps-types';
+import type {
+  OnRpcRequestHandler,
+  OnHomePageHandler,
+  OnUserInputHandler,
+  OnInstallHandler,
+  InputChangeEvent
+} from '@metamask/snaps-sdk';
 import { BN } from '@polkadot/util';
 import { UserInputEventType } from '@metamask/snaps-sdk';
 import {
@@ -16,17 +23,10 @@ import {
   Icon,
   Image
 } from '@metamask/snaps-sdk/jsx';
-import type {
-  OnHomePageHandler,
-  OnUserInputHandler,
-  OnInstallHandler,
-  InputChangeEvent
-} from '@metamask/snaps-sdk';
 import { assert } from 'superstruct';
 import type { MetamaskState } from './interfaces';
 import { EmptyMetamaskState } from './interfaces';
 import { getPublicKey } from './rpc/getPublicKey';
-import { exportSeed } from './rpc/exportSeed';
 import { getBalances } from './rpc/substrate/getBalances';
 import { getAddress } from './rpc/getAddress';
 import { getTransactions } from './rpc/substrate/getTransactions';
@@ -38,14 +38,12 @@ import { generateTransactionPayload } from './rpc/generateTransactionPayload';
 import { send } from './rpc/send';
 import {
   validConfigureSchema,
-  validExportAccountSchema,
   validGenerateTransactionPayloadSchema,
   validGetBlockSchema,
   validSendSchema,
   validSignPayloadJSONSchema,
   validSignPayloadRawSchema
 } from './util/validation';
-import { exportAccount } from './rpc/exportAccount';
 import { getConfiguration } from './configuration';
 import {
   discordIco,
@@ -74,7 +72,7 @@ const apiDependentMethods = [
   'send'
 ];
 
-export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
+export const onRpcRequest: OnRpcRequestHandler = async ({ request }): Promise<any> => {
   const state = await snap.request({
     method: 'snap_manageState',
     params: { operation: 'get' }
@@ -104,11 +102,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       return await getPublicKey();
     case 'getAddress':
       return await getAddress();
-    case 'exportSeed':
-      return await exportSeed();
-    case 'exportAccount':
-      assert(request.params, validExportAccountSchema);
-      return await exportAccount(request.params.jsonPassphrase);
     case 'getAllTransactions':
       return await getTransactions();
     case 'getBlock':

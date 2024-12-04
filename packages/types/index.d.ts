@@ -7,18 +7,6 @@ export interface GetPublicKeyRequest {
 export interface GetAddressRequest {
   method: 'getAddress';
 }
-
-export interface ExportSeedRequest {
-  method: 'exportSeed';
-}
-
-export interface ExportAccountRequest {
-  method: 'exportAccount';
-  params: {
-    jsonPassphrase?: string;
-  };
-}
-
 export interface GetTransactionsRequest {
   method: 'getAllTransactions';
 }

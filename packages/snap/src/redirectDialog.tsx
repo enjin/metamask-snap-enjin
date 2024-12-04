@@ -13,7 +13,8 @@ import {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function redirectDialog(id: string, dialog: string) {
-  let icon, title, text, link;
+  let title, text, link;
+  let icon: 'arrow-2-up' | 'document-code' | 'global' | 'user';
 
   switch (dialog) {
     case 'send': {

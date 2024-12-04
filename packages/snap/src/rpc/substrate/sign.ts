@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { ApiPromise } from '@polkadot/api/';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import { stringToU8a, u8aToHex } from '@polkadot/util';
