@@ -1,6 +1,6 @@
 import type { ApiPromise } from '@polkadot/api/';
 import type { SubmittableExtrinsic } from '@polkadot/api/types';
-import type { TxPayload } from '@enjin/metamask-enjin-types';
+import type { TxPayload } from '@enjin-protos/metamask-enjin-types';
 import { getAddress } from './getAddress';
 
 export async function generateTransactionPayload(

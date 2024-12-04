@@ -7,12 +7,12 @@
     "url": "git+https://github.com/enjin/metamask-snap-enjin.git"
   },
   "source": {
-    "shasum": "DFqSqsf5JI9tashk5v7YEwLPMCewKNzewHQ+N0NLtW8=",
+    "shasum": "pd6T8izjpaodJalxbO3wHAZPADQOzpcP5uVPxb+PwMo=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/enjin.svg",
-        "packageName": "@enjin/snap",
+        "packageName": "@enjin-protos/snap",
         "registry": "https://registry.npmjs.org/"
       }
     }

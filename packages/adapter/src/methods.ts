@@ -8,7 +8,7 @@ import type {
   SnapConfig,
   Transaction,
   TxPayload
-} from '@enjin/metamask-enjin-types';
+} from '@enjin-protos/metamask-enjin-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { MetamaskPolkadotSnap } from './snap';
 

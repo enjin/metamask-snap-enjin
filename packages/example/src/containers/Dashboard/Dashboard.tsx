@@ -16,8 +16,8 @@ import type {
   SnapNetworks,
   Transaction,
   SupportedSnapNetworks
-} from '@enjin/metamask-enjin-types';
-import type { MetamaskSnapApi } from '@enjin/metamask-enjin-adapter/src/types';
+} from '@enjin-protos/metamask-enjin-types';
+import type { MetamaskSnapApi } from '@enjin-protos/metamask-enjin-adapter/src/types';
 import { Transfer } from '../../components/Transfer/Transfer';
 import { SignMessage } from '../../components/SignMessage/SignMessage';
 import { TransactionTable } from '../../components/TransactionTable/TransactionTable';

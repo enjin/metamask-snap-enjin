@@ -1,6 +1,6 @@
 import type { Dispatch, PropsWithChildren, Reducer } from 'react';
 import React, { createContext, useReducer } from 'react';
-import type { MetamaskPolkadotSnap } from '@enjin/metamask-enjin-adapter/build/snap';
+import type { MetamaskPolkadotSnap } from '@enjin-protos/metamask-enjin-adapter/build/snap';
 import { hasMetaMask } from '../services/metamask';
 
 interface IPolkadotSnap {

@@ -61,6 +61,7 @@ import {
 import { redirectDialog } from './redirectDialog';
 import { welcomeScreen } from './welcomeScreen';
 import getPrice from './getPrices';
+import { enjinRelayConfiguration } from './configuration/predefined';
 
 const apiDependentMethods = [
   'getBlock',
@@ -176,12 +177,8 @@ export const onInstall: OnInstallHandler = async () => {
  * @returns A static panel rendered with custom UI.
  */
 export const onHomePage: OnHomePageHandler = async () => {
-  const address = await getAddress();
-  const api = await getApi();
+  const [address, api, price] = await Promise.all([getAddress(), getApi(), getPrice()]);
   const balances = await getBalances(api, address);
-  const price: string = await getPrice();
-  console.log(balances);
-  console.log(price);
 
   return {
     content: homePage(address, balances, price)
@@ -196,17 +193,19 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
     switch (event.name) {
       case 'switchNetwork': {
         const { value } = event as InputChangeEvent;
-        await resetApi();
-        await configure(value as string, {});
-        const address = await getAddress();
-        const api = await getApi();
+        const [, config, price] = await Promise.all([
+          resetApi(),
+          configure(value as string, {}),
+          getPrice()
+        ]);
+        const [address, api] = await Promise.all([getAddress(), getApi()]);
         const balances = await getBalances(api, address);
-        const price: string = await getPrice();
+
         await snap.request({
           method: 'snap_updateInterface',
           params: {
             id,
-            ui: homePage(address, balances, price)
+            ui: homePage(address, balances, price, config.networkName)
           }
         });
 
@@ -225,15 +224,19 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
         await redirectDialog(id, 'support');
         break;
       case 'back': {
-        const address = await getAddress();
-        const api = await getApi();
+        const [address, api, config, price] = await Promise.all([
+          getAddress(),
+          getApi(),
+          getConfiguration(),
+          getPrice()
+        ]);
         const balances = await getBalances(api, address);
-        const price: string = await getPrice();
+
         await snap.request({
           method: 'snap_updateInterface',
           params: {
             id,
-            ui: homePage(address, balances, price)
+            ui: homePage(address, balances, price, config.networkName)
           }
         });
         break;
@@ -245,7 +248,12 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const homePage = (address: string, balances: { reserved: string; free: string }, usd: string) => {
+const homePage = (
+  address: string,
+  balances: { reserved: string; free: string },
+  usd: string,
+  network = enjinRelayConfiguration.networkName
+) => {
   const free = new BN(balances.free);
   const reserved = new BN(balances.reserved);
   const decimals = new BN('1000000000000000000');
@@ -265,11 +273,11 @@ const homePage = (address: string, balances: { reserved: string; free: string },
           <Icon name="wallet" size="md" />
           <Heading>Address</Heading>
         </Box>
-        <Dropdown name="switchNetwork">
+        <Dropdown name="switchNetwork" value={network}>
           <Option value="enjin-relaychain">Enjin Relaychain</Option>
           <Option value="enjin-matrixchain">Enjin Matrixchain</Option>
           <Option value="canary-relaychain">Canary Relaychain</Option>
-          <Option value="canary-matrixchain">Canary Relaychain</Option>
+          <Option value="canary-matrixchain">Canary Matrixchain</Option>
         </Dropdown>
         <Copyable value={address} />
       </Section>

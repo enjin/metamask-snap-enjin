@@ -1,8 +1,8 @@
 import { web3EnablePromise } from '@polkadot/extension-dapp';
-import type { InjectedMetamaskExtension } from '@enjin/metamask-enjin-adapter/src/types';
+import type { InjectedMetamaskExtension } from '@enjin-protos/metamask-enjin-adapter/src/types';
 import type { InjectedExtension } from '@polkadot/extension-inject/types';
-import { enablePolkadotSnap } from '@enjin/metamask-enjin-adapter';
-import type { MetamaskPolkadotSnap } from '@enjin/metamask-enjin-adapter/build/snap';
+import { enablePolkadotSnap } from '@enjin-protos/metamask-enjin-adapter';
+import type { MetamaskPolkadotSnap } from '@enjin-protos/metamask-enjin-adapter/build/snap';
 
 export function hasMetaMask(): boolean {
   if (!window.ethereum) {

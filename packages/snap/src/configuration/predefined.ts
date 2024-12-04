@@ -1,4 +1,4 @@
-import type { SnapConfig } from '@enjin/metamask-enjin-types';
+import type { SnapConfig } from '@enjin-protos/metamask-enjin-types';
 
 export const enjinRelayConfiguration: SnapConfig = {
   addressPrefix: 2135,

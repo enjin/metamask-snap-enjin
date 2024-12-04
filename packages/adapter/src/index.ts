@@ -1,9 +1,9 @@
 import '@polkadot/types-augment';
-import type { SnapConfig } from '@enjin/metamask-enjin-types';
+import type { SnapConfig } from '@enjin-protos/metamask-enjin-types';
 import { MetamaskPolkadotSnap } from './snap';
 import { hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled } from './utils';
 
-const defaultSnapOrigin = 'npm:@enjin/snap';
+const defaultSnapOrigin = 'npm:@enjin-protos/snap';
 
 export type SnapInstallationParamNames = string;
 

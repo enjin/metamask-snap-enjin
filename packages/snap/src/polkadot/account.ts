@@ -1,7 +1,7 @@
 import type { KeyringPair } from '@polkadot/keyring/types';
 import { Keyring } from '@polkadot/keyring';
 import { stringToU8a } from '@polkadot/util';
-import type { SnapNetworks } from '@enjin/metamask-enjin-types';
+import type { SnapNetworks } from '@enjin-protos/metamask-enjin-types';
 import { getConfiguration } from '../configuration';
 
 /**

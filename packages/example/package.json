@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@enjin/metamask-enjin-adapter": "workspace:^",
-    "@enjin/metamask-enjin-types": "workspace:^",
+    "@enjin-protos/metamask-enjin-adapter": "workspace:^",
+    "@enjin-protos/metamask-enjin-types": "workspace:^",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "latest",

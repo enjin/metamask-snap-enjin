@@ -1,4 +1,4 @@
-import type { BlockId } from '@enjin/metamask-enjin-types';
+import type { BlockId } from '@enjin-protos/metamask-enjin-types';
 import type { SignerPayloadRaw } from '@polkadot/types/types';
 import type { Describe, Infer } from 'superstruct';
 import {

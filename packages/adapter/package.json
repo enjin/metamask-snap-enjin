@@ -1,5 +1,5 @@
 {
-  "name": "@enjin/metamask-enjin-adapter",
+  "name": "@enjin-protos/metamask-enjin-adapter",
   "version": "0.1.0",
   "main": "./build/index.js",
   "module": "./build/index.js",

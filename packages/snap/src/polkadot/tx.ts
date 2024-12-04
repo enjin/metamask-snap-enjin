@@ -1,4 +1,4 @@
-import type { Transaction } from '@enjin/metamask-enjin-types';
+import type { Transaction } from '@enjin-protos/metamask-enjin-types';
 import { getMetamaskState } from '../rpc/getMetamaskState';
 
 export async function saveTxToState(tx: Transaction): Promise<void> {
