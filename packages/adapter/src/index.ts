@@ -29,7 +29,6 @@ export async function enablePolkadotSnap(
   }
 
   const isInstalled = await isPolkadotSnapInstalled(snapId);
-  console.info('isInstalled', isInstalled);
 
   if (!isInstalled) {
     // // enable snap
@@ -47,7 +46,6 @@ export async function enablePolkadotSnap(
 
   try {
     const snapApi = snap.getMetamaskSnapApi();
-    console.info('snapApi', snapApi);
     await snapApi.setConfiguration(config);
   } catch (err) {
     console.error('Failed to set configuration', err);

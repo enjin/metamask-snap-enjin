@@ -130,7 +130,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }): Promise<an
         validConfigureSchema,
         'Invalid configuration schema - Network name should be provided'
       );
-      console.info('Configuring snap with', request.params.configuration);
+    
       return await configure(
         request.params.configuration.networkName,
         request.params.configuration

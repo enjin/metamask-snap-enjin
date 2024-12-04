@@ -66,7 +66,6 @@ export async function showRawPayloadDialog(message: RawDialogContent): Promise<b
 }
 
 export async function showJSONPayloadDialog(message: JSONDialogContent): Promise<boolean> {
-  console.log('message', message);
   return (await snap.request({
     method: 'snap_dialog',
     params: {

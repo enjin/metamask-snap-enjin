@@ -17,7 +17,6 @@ export async function installPolkadotSnap(): Promise<boolean> {
   const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;
   try {
     await enablePolkadotSnap({ networkName: 'enjin-relaychain' }, snapId);
-    console.info('Snap installed!!');
     return true;
   } catch (err) {
     console.error(err);
@@ -51,12 +50,10 @@ export async function initiatePolkadotSnap(): Promise<SnapInitializationResponse
   const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;
 
   try {
-    console.info('Attempting to connect to snap...');
     const metamaskPolkadotSnap = await enablePolkadotSnap(
       { networkName: 'enjin-relaychain' },
       snapId
     );
-    console.info('Snap installed!');
     return { isSnapInstalled: true, snap: metamaskPolkadotSnap };
   } catch (e) {
     console.error(e);
