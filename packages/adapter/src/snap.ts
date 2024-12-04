@@ -1,11 +1,9 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 import {
-  exportAccount,
-  exportSeed,
   generateTransactionPayload,
   getAddress,
   getAllTransactions,
-  getBalance,
+  getBalances,
   getConfiguration,
   getLatestBlock,
   getPublicKey,
@@ -26,17 +24,15 @@ export class MetamaskPolkadotSnap {
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
     this.snapId = `${this.pluginOrigin}`;
-    this.config = config || { networkName: 'westend' };
+    this.config = config || { networkName: 'enjin-relaychain' };
   }
 
   public getMetamaskSnapApi = (): MetamaskSnapApi => {
     return {
-      exportSeed: exportSeed.bind(this),
-      exportAccount: exportAccount.bind(this),
       generateTransactionPayload: generateTransactionPayload.bind(this),
       getAddress: getAddress.bind(this),
       getAllTransactions: getAllTransactions.bind(this),
-      getBalance: getBalance.bind(this),
+      getBalances: getBalances.bind(this),
       getLatestBlock: getLatestBlock.bind(this),
       getPublicKey: getPublicKey.bind(this),
       send: sendSignedData.bind(this),

@@ -1,11 +1,11 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 import { getConfiguration, getDefaultConfiguration } from '../../../src/configuration';
 import {
   defaultConfiguration,
-  kusamaConfiguration,
-  westendConfiguration
+  enjinMatrixConfiguration,
+  canaryRelayConfiguration
 } from '../../../src/configuration/predefined';
 import { EmptyMetamaskState } from '../../../src/interfaces';
 import type { WalletMock } from '../wallet.mock';
@@ -17,12 +17,12 @@ describe('Test configuration functions', function () {
   describe('getDefaultConfiguration', function () {
     it('should return kusama configuration on "kusama"', function () {
       const configuration = getDefaultConfiguration('kusama');
-      expect(configuration).to.be.deep.eq(kusamaConfiguration);
+      expect(configuration).to.be.deep.eq(enjinMatrixConfiguration);
     });
 
     it('should return westend configuration on "westend"', function () {
       const configuration = getDefaultConfiguration('westend');
-      expect(configuration).to.be.deep.eq(westendConfiguration);
+      expect(configuration).to.be.deep.eq(canaryRelayConfiguration);
     });
 
     it('should return default configuration on empty string', function () {
@@ -51,7 +51,8 @@ describe('Test configuration functions', function () {
       const customConfiguration: SnapConfig = {
         addressPrefix: 5,
         networkName: 'westend',
-        wsRpcUrl: 'url'
+        wsRpcUrl: 'url',
+        genesisHash: '0xhash',
       };
       walletStub.request.returns({ config: JSON.stringify(customConfiguration) });
       const configuration = await getConfiguration();

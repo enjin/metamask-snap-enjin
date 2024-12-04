@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type {
+  AccountData,
   BlockInfo,
   MetamaskPolkadotRpcRequest,
   SignPayloadJSONRequest,
@@ -6,7 +8,7 @@ import type {
   SnapConfig,
   Transaction,
   TxPayload
-} from '@chainsafe/metamask-polkadot-types';
+} from '@enjin/metamask-enjin-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { MetamaskPolkadotSnap } from './snap';
 
@@ -14,7 +16,6 @@ async function sendSnapMethod(
   request: MetamaskPolkadotRpcRequest,
   snapId: string
 ): Promise<unknown> {
-  console.info('sendSnapMethod', request, snapId);
   return await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: {
@@ -54,8 +55,13 @@ export async function signPayloadRaw(
   return (await sign.bind(this)('signPayloadRaw', payload)).signature;
 }
 
-export async function getBalance(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({ method: 'getBalance' }, this.snapId)) as string;
+export async function getBalances(this: MetamaskPolkadotSnap): Promise<AccountData> {
+  try {
+    return (await sendSnapMethod({ method: 'getBalances' }, this.snapId)) as AccountData;
+  } catch (e) {
+    console.log('Unable to fetch balances', e);
+    return { free: '0', reserved: '0' };
+  }
 }
 
 export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
@@ -64,20 +70,6 @@ export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
 
 export async function getPublicKey(this: MetamaskPolkadotSnap): Promise<string> {
   return (await sendSnapMethod({ method: 'getPublicKey' }, this.snapId)) as string;
-}
-
-export async function exportSeed(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({ method: 'exportSeed' }, this.snapId)) as string;
-}
-
-export async function exportAccount(
-  this: MetamaskPolkadotSnap,
-  jsonPassphrase?: string
-): Promise<string> {
-  return (await sendSnapMethod(
-    { method: 'exportAccount', params: { jsonPassphrase } },
-    this.snapId
-  )) as string;
 }
 
 export async function getConfiguration(this: MetamaskPolkadotSnap): Promise<SnapConfig> {

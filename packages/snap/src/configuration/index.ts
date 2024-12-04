@@ -1,27 +1,27 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 import { getMetamaskState } from '../rpc/getMetamaskState';
 import {
   defaultConfiguration,
-  kusamaConfiguration,
-  polkadotConfiguration,
-  westendConfiguration,
-  canaryMatrixchainConfiguration,
+  enjinMatrixConfiguration,
+  enjinRelayConfiguration,
+  canaryRelayConfiguration,
+  canaryMatrixConfiguration
 } from './predefined';
 
 export function getDefaultConfiguration(networkName: string): SnapConfig {
   switch (networkName) {
-    case 'polkadot':
-      console.log('Polkadot configuration selected');
-      return polkadotConfiguration;
-    case 'kusama':
-      console.log('Kusama configuration selected');
-      return kusamaConfiguration;
-    case 'westend':
-      console.log('Westend configuration selected');
-      return westendConfiguration;
+    case 'enjin-relaychain':
+      console.log('Enjin Relaychain configuration selected');
+      return enjinRelayConfiguration;
+    case 'enjin-matrixchain':
+      console.log('Enjin Matrixchain configuration selected');
+      return enjinMatrixConfiguration;
+    case 'canary-relaychain':
+      console.log('Canary Relaychain configuration selected');
+      return canaryRelayConfiguration;
     case 'canary-matrixchain':
       console.log('Canary Matrixchain configuration selected');
-      return canaryMatrixchainConfiguration;
+      return canaryMatrixConfiguration;
     default:
       return defaultConfiguration;
   }

@@ -4,10 +4,12 @@ export function shortAddress(address: string): string {
 
 export function getCurrency(network: string): string {
   switch (network) {
-    case 'kusama':
-      return 'KSM';
-    case 'westend':
-      return 'WND';
+    case 'enjin-relaychain':
+      return 'ENJ';
+    case 'enjin-matrixchain':
+      return 'ENJ';
+    case 'canary-relaychain':
+      return 'cENJ';
     case 'canary-matrixchain':
       return 'cENJ';
   }

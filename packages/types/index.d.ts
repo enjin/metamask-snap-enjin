@@ -7,18 +7,6 @@ export interface GetPublicKeyRequest {
 export interface GetAddressRequest {
   method: 'getAddress';
 }
-
-export interface ExportSeedRequest {
-  method: 'exportSeed';
-}
-
-export interface ExportAccountRequest {
-  method: 'exportAccount';
-  params: {
-    jsonPassphrase?: string;
-  };
-}
-
 export interface GetTransactionsRequest {
   method: 'getAllTransactions';
 }
@@ -30,8 +18,8 @@ export interface GetBlockRequest {
   };
 }
 
-export interface GetBalanceRequest {
-  method: 'getBalance';
+export interface GetBalancesRequest {
+  method: 'getBalances';
 }
 
 export interface GetConfigurationRequest {
@@ -90,7 +78,7 @@ export type MetamaskPolkadotRpcRequest =
   | ExportAccountRequest
   | GetTransactionsRequest
   | GetBlockRequest
-  | GetBalanceRequest
+  | GetBalancesRequest
   | GetConfigurationRequest
   | ConfigureSnapRequest
   | AddPolkadotAssetRequest
@@ -125,6 +113,11 @@ export interface TxPayload {
   payload: SignerPayloadJSON;
 }
 
+export interface AccountData {
+  free: string;
+  reserved: string;
+}
+
 export interface BlockInfo {
   hash: string;
   number: string;
@@ -137,7 +130,7 @@ export interface UnitConfiguration {
   customViewUrl?: string;
 }
 
-export type SupportedSnapNetworks = 'polkadot' | 'kusama' | 'westend' | 'canary-matrixchain';
+export type SupportedSnapNetworks = 'enjin-relaychain' | 'enjin-matrixchain' | 'canary-relaychain' | 'canary-matrixchain';
 
 export type SnapNetworks = SupportedSnapNetworks | string;
 

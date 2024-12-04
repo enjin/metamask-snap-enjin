@@ -1,31 +1,20 @@
-# Polkadot Wallet Snap for MetaMask
+# Metamask <> Enjin Snap
 
-![](https://github.com/chainsafe/metamask-snap-polkadot/workflows/ci/badge.svg)
-![](https://img.shields.io/github/issues-raw/chainsafe/metamask-snap-polkadot)
-![](https://img.shields.io/github/license/chainsafe/metamask-snap-polkadot)
+![](https://github.com/enjin/metamask-snap-enjin/workflows/ci/badge.svg)
+![](https://img.shields.io/github/issues-raw/enjin/metamask-snap-enjin)
+![](https://img.shields.io/github/license/enjin/metamask-snap-enjin)
 
 This project uses the [MetaMask Snaps](https://metamask.io/snaps/) framework to extend MetaMask
-capabilities to include support for Polkadot, Kusama, and other
-[Substrate](https://docs.substrate.io/)- and FRAME-based blockchains in the
-[Polkadot](https://www.polkadot.network/) ecosystem.
+capabilities to include support for Enjin Relaychain and Enjin Matrixchain
 
-## Documentation
-
-Polkadot Wallet snap architecture, integration steps and detailed API documentation for dApp
-developers is covered in the
-[project wiki](https://github.com/ChainSafe/metamask-snap-polkadot/wiki), which also includes a
-usage guide for the [example dApp](https://polkadot.snap.chainsafe.io/).
-
-## Local Development
+## Testing
 
 Developers who wish to use the snap locally must use [MetaMask Flask](https://metamask.io/flask/);
 run the following commands from the project root to launch the
-[Polkadot Wallet Snap Example dApp](https://github.com/ChainSafe/metamask-snap-polkadot/tree/master/packages/example).
 
 - `yarn install`
 - `yarn build`
 - `yarn run demo`
-
 
 ## License
 

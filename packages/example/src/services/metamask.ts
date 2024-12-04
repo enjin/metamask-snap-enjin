@@ -1,8 +1,8 @@
 import { web3EnablePromise } from '@polkadot/extension-dapp';
-import type { InjectedMetamaskExtension } from '@chainsafe/metamask-polkadot-adapter/src/types';
+import type { InjectedMetamaskExtension } from '@enjin/metamask-enjin-adapter/src/types';
 import type { InjectedExtension } from '@polkadot/extension-inject/types';
-import { enablePolkadotSnap } from '@chainsafe/metamask-polkadot-adapter';
-import type { MetamaskPolkadotSnap } from '@chainsafe/metamask-polkadot-adapter/build/snap';
+import { enablePolkadotSnap } from '@enjin/metamask-enjin-adapter';
+import type { MetamaskPolkadotSnap } from '@enjin/metamask-enjin-adapter/build/snap';
 
 export function hasMetaMask(): boolean {
   if (!window.ethereum) {
@@ -11,12 +11,12 @@ export function hasMetaMask(): boolean {
   return window.ethereum.isMetaMask;
 }
 
-export const defaultSnapId = 'local:http://localhost:8081';
+export const defaultSnapId = 'local:http://localhost:8080';
 
 export async function installPolkadotSnap(): Promise<boolean> {
   const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;
   try {
-    await enablePolkadotSnap({ networkName: 'westend' }, snapId);
+    await enablePolkadotSnap({ networkName: 'enjin-relaychain' }, snapId);
     console.info('Snap installed!!');
     return true;
   } catch (err) {
@@ -37,7 +37,7 @@ export async function getInjectedMetamaskExtension(): Promise<InjectedMetamaskEx
 function getMetamaskExtension(
   extensions: InjectedExtension[]
 ): InjectedMetamaskExtension | undefined {
-  return extensions.find((item) => item.name === 'metamask-polkadot-snap') as unknown as
+  return extensions.find((item) => item.name === 'metamask-enjin-snap') as unknown as
     | InjectedMetamaskExtension
     | undefined;
 }
@@ -52,7 +52,10 @@ export async function initiatePolkadotSnap(): Promise<SnapInitializationResponse
 
   try {
     console.info('Attempting to connect to snap...');
-    const metamaskPolkadotSnap = await enablePolkadotSnap({ networkName: 'westend' }, snapId);
+    const metamaskPolkadotSnap = await enablePolkadotSnap(
+      { networkName: 'enjin-relaychain' },
+      snapId
+    );
     console.info('Snap installed!');
     return { isSnapInstalled: true, snap: metamaskPolkadotSnap };
   } catch (e) {

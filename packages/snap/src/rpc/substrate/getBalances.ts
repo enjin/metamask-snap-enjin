@@ -7,13 +7,19 @@ import { getKeyPair } from '../../polkadot/account';
  * @param api
  * @param address
  */
-export async function getBalance(api: ApiPromise, address?: string): Promise<string> {
+export async function getBalances(
+  api: ApiPromise,
+  address?: string
+): Promise<{ reserved: string; free: string }> {
   if (!address) {
     address = (await getKeyPair()).address;
   }
 
   const account = (await api.query.system.account(address)) as unknown as { data: AccountData };
-  console.info('QUERY BALANCE FOR ACCOUNT', account);
+  console.info('QUERY BALANCE FOR ACCOUNT', account.data);
 
-  return account.data.free.toString();
+  return {
+    free: account.data.free.toString(),
+    reserved: account.data.reserved.toString()
+  };
 }

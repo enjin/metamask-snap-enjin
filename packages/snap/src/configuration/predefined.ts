@@ -1,30 +1,42 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 
-export const kusamaConfiguration: SnapConfig = {
-  addressPrefix: 2,
-  networkName: 'kusama',
-  genesisHash: '0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe',
+export const enjinRelayConfiguration: SnapConfig = {
+  addressPrefix: 2135,
+  networkName: 'enjin-relaychain',
+  genesisHash: '0xd8761d3c88f26dc12875c00d3165f7d67243d56fc85b4cf19937601a7916e5a9',
   unit: {
-    decimals: 12,
+    decimals: 18,
+    image: 'https://polkadot.js.org/apps/static/polkadot-circle.1eea41b2..svg',
+    symbol: 'ENJ'
+  },
+  wsRpcUrl: 'https://rpc.relay.blockchain.enjin.io/'
+};
+
+export const enjinMatrixConfiguration: SnapConfig = {
+  addressPrefix: 1110,
+  networkName: 'enjin-matrixchain',
+  genesisHash: '0x3af4ff48ec76d2efc8476730f423ac07e25ad48f5f4c9dc39c778b164d808615',
+  unit: {
+    decimals: 18,
     image: 'https://svgshare.com/i/L3o.svg',
-    symbol: 'KSM'
+    symbol: 'ENJ'
   },
-  wsRpcUrl: 'https://kusama-rpc.polkadot.io/'
+  wsRpcUrl: 'https://rpc.matrix.blockchain.enjin.io/'
 };
 
-export const westendConfiguration: SnapConfig = {
-  addressPrefix: 42,
-  networkName: 'westend',
-  genesisHash: '0xe143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e',
+export const canaryRelayConfiguration: SnapConfig = {
+  addressPrefix: 69,
+  networkName: 'canary-relaychain',
+  genesisHash: '0x735d8773c63e74ff8490fee5751ac07e15bfe2b3b5263be4d683c48dbdfbcd15',
   unit: {
-    decimals: 12,
+    decimals: 18,
     image: 'https://svgshare.com/i/L2d.svg',
-    symbol: 'WND'
+    symbol: 'cENJ'
   },
-  wsRpcUrl: 'https://westend-rpc.polkadot.io/'
+  wsRpcUrl: 'https://rpc.relay.canary.enjin.io/'
 };
 
-export const canaryMatrixchainConfiguration: SnapConfig = {
+export const canaryMatrixConfiguration: SnapConfig = {
   addressPrefix: 9030,
   networkName: 'canary-matrixchain',
   genesisHash: '0xa37725fd8943d2a524cb7ecc65da438f9fa644db78ba24dcd0003e2f95645e8f',
@@ -36,16 +48,4 @@ export const canaryMatrixchainConfiguration: SnapConfig = {
   wsRpcUrl: 'https://rpc.matrix.canary.enjin.io/'
 };
 
-export const polkadotConfiguration: SnapConfig = {
-  addressPrefix: 0,
-  networkName: 'polkadot',
-  genesisHash: '0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3',
-  unit: {
-    decimals: 12,
-    image: 'https://polkadot.js.org/apps/static/polkadot-circle.1eea41b2..svg',
-    symbol: 'DOT'
-  },
-  wsRpcUrl: 'https://rpc.polkadot.io/'
-};
-
-export const defaultConfiguration: SnapConfig = westendConfiguration;
+export const defaultConfiguration: SnapConfig = enjinRelayConfiguration;

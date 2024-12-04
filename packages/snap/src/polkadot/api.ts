@@ -15,7 +15,7 @@ async function initApi(rpcUrl: string): Promise<ApiPromise> {
     console.error('Error on provider creation', error);
     throw error;
   }
-  console.info('Provider created', provider);
+
   const api = await ApiPromise.create({ provider });
 
   console.info('Api is ready', api);

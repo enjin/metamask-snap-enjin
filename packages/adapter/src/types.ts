@@ -1,10 +1,11 @@
 import type {
+  AccountData,
   BlockInfo,
   SnapConfig,
   SnapRpcMethodRequest,
   Transaction,
   TxPayload
-} from '@chainsafe/metamask-polkadot-types';
+} from '@enjin/metamask-enjin-types';
 import type { InjectedExtension } from '@polkadot/extension-inject/types';
 import type { SignerPayloadRaw } from '@polkadot/types/types/extrinsic';
 import type { SignerPayloadJSON } from '@polkadot/types/types';
@@ -14,11 +15,7 @@ export interface MetamaskSnapApi {
 
   getPublicKey(): Promise<string>;
 
-  getBalance(): Promise<string>;
-
-  exportSeed(): Promise<string>;
-
-  exportAccount(jsonPassphrase?: string): Promise<string>;
+  getBalances(): Promise<AccountData>;
 
   getLatestBlock(): Promise<BlockInfo>;
 

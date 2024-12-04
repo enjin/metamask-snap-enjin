@@ -16,8 +16,8 @@ import type {
   SnapNetworks,
   Transaction,
   SupportedSnapNetworks
-} from '@chainsafe/metamask-polkadot-types';
-import type { MetamaskSnapApi } from '@chainsafe/metamask-polkadot-adapter/src/types';
+} from '@enjin/metamask-enjin-types';
+import type { MetamaskSnapApi } from '@enjin/metamask-enjin-adapter/src/types';
 import { Transfer } from '../../components/Transfer/Transfer';
 import { SignMessage } from '../../components/SignMessage/SignMessage';
 import { TransactionTable } from '../../components/TransactionTable/TransactionTable';
@@ -38,14 +38,14 @@ export const Dashboard = (): React.JSX.Element => {
     number: ''
   });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [network, setNetwork] = useState<SnapNetworks>('westend');
+  const [network, setNetwork] = useState<SnapNetworks>('enjin-relaychain');
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
   const [customNetworkInputs, setCustomNetworkInputs] = useState(false);
 
   const showCustomNetworkName = ![
-    'polkadot',
-    'westend',
-    'kusama',
+    'enjin-relaychain',
+    'enjin-matrixchain',
+    'canary-relaychain',
     'canary-matrixchain',
     'custom'
   ].includes(network);
@@ -80,7 +80,7 @@ export const Dashboard = (): React.JSX.Element => {
       wsRpcUrl: rpcUrl,
       addressPrefix: addressPrefix,
       unit: {
-        decimals: submitData.unitDecimals || 12,
+        decimals: submitData.unitDecimals || 18,
         image: submitData.unitImage || '',
         symbol: submitData.unitSymbol || ''
       }
@@ -92,9 +92,9 @@ export const Dashboard = (): React.JSX.Element => {
     } catch (e) {
       console.log(e);
       console.log('revert to polkadot configuration');
-      await api.setConfiguration({ networkName: 'polkadot' });
+      await api.setConfiguration({ networkName: 'enjin-relaychain' });
       setCustomNetworkInputs(false);
-      setNetwork('polkadot');
+      setNetwork('enjin-relaychain');
     }
   };
 
@@ -110,9 +110,11 @@ export const Dashboard = (): React.JSX.Element => {
   useEffect(() => {
     void (async () => {
       if (api) {
+        const balances = await api.getBalances();
+
         setAddress(await api.getAddress());
         setPublicKey(await api.getPublicKey());
-        setBalance(await api.getBalance());
+        setBalance(balances.free);
         setLatestBlock(await api.getLatestBlock());
         setTransactions(await api.getAllTransactions());
       }
@@ -123,8 +125,9 @@ export const Dashboard = (): React.JSX.Element => {
     // periodically check balance
     const interval = setInterval(async () => {
       if (api) {
-        const newBalance = await api.getBalance();
-        setBalance(newBalance);
+        const balances = await api.getBalances();
+
+        setBalance(balances.free);
       }
     }, 60000); // every 60 seconds
     return () => clearInterval(interval);
@@ -134,7 +137,7 @@ export const Dashboard = (): React.JSX.Element => {
     <Container maxWidth="lg">
       <Grid direction="column" alignItems="center" justifyContent="center" container spacing={3}>
         <Box style={{ margin: '2rem' }}>
-          <Typography variant="h2">Polkadot Wallet Snap Example dApp</Typography>
+          <Typography variant="h2">Enjin Wallet Snap Example dApp</Typography>
         </Box>
         {!state.polkadotSnap.isInstalled ? (
           <MetaMaskConnector />
@@ -147,10 +150,14 @@ export const Dashboard = (): React.JSX.Element => {
               alignContent={'flex-start'}
             >
               <InputLabel>Network</InputLabel>
-              <Select value={network} defaultValue={'westend'} onChange={handleNetworkChange}>
-                <MenuItem value={'westend'}>Westend</MenuItem>
-                <MenuItem value={'kusama'}>Kusama</MenuItem>
-                <MenuItem value={'polkadot'}>Polkadot</MenuItem>
+              <Select
+                value={network}
+                defaultValue={'enjin-relaychain'}
+                onChange={handleNetworkChange}
+              >
+                <MenuItem value={'enjin-relaychain'}>Enjin Relaychain</MenuItem>
+                <MenuItem value={'enjin-matrixchain'}>Enjin Matrixchain</MenuItem>
+                <MenuItem value={'canary-relaychain'}>Canary Relaychain</MenuItem>
                 <MenuItem value={'canary-matrixchain'}>Canary Matrixchain</MenuItem>
                 <MenuItem value={'custom'}>Custom</MenuItem>
                 {showCustomNetworkName && <MenuItem value={network}>{network}</MenuItem>}

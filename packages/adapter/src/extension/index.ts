@@ -1,7 +1,7 @@
 import type { Injected, InjectedAccount, InjectedWindow } from '@polkadot/extension-inject/types';
 import type { SignerPayloadJSON, SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
 import type { HexString } from '@polkadot/util/types';
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@enjin/metamask-enjin-types';
 import type { SnapInstallationParamNames } from '../index';
 import { enablePolkadotSnap } from '../index';
 import { hasMetaMask, isMetamaskSnapsSupported } from '../utils';
@@ -25,14 +25,14 @@ function transformAccounts(accounts: string[], config?: SnapConfig): InjectedAcc
   return accounts.map((address, i) => ({
     address,
     genesisHash: config?.genesisHash,
-    name: `Polkadot Snap #${i}`,
+    name: `Enjin Snap #${i}`,
     type: 'ed25519'
   }));
 }
 
 function injectPolkadotSnap({
   win,
-  injectedSnapId = 'metamask-polkadot-snap',
+  injectedSnapId = 'metamask-enjin-snap',
   config,
   snapOrigin,
   snapInstallationParams
@@ -73,7 +73,7 @@ function injectPolkadotSnap({
   };
 }
 /**
- * @param injectedSnapId - Optional ID of injected snap, default: "metamask-polkadot-snap"
+ * @param injectedSnapId - Optional ID of injected snap, default: "metamask-enjin-snap"
  */
 export function initPolkadotSnap(
   { config, snapOrigin, snapInstallationParams }: IEnablePolkadotSnapParams,

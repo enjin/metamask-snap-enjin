@@ -1,14 +1,14 @@
 {
-  "name": "@chainsafe/metamask-polkadot-adapter",
-  "version": "0.8.1",
+  "name": "@enjin/metamask-enjin-adapter",
+  "version": "0.1.0",
   "main": "./build/index.js",
   "module": "./build/index.js",
   "types": "./build/index.d.ts",
-  "author": "ChainSafe <info@chainsafe.io>",
+  "author": "Enjin <contact@enjin.io>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/chainsafe/metamask-snap-polkadot/tree/master/packages/adapter",
+  "homepage": "https://github.com/enjin/metamask-snap-enjin/tree/master/packages/adapter",
   "keywords": [
-    "polkadot",
+    "enjin",
     "metamask",
     "snap",
     "substrate"

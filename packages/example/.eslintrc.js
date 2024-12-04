@@ -12,5 +12,6 @@ module.exports = {
     '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'warn',
+    "@typescript-eslint/no-unsafe-argument": 'warn',
   }
 };
