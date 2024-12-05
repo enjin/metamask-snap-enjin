@@ -18,7 +18,6 @@ async function initApi(rpcUrl: string): Promise<ApiPromise> {
 
   const api = await ApiPromise.create({ provider });
 
-
   return api;
 }
 
@@ -35,7 +34,6 @@ export const resetApi = async (): Promise<void> => {
 };
 
 export const getApi = async (): Promise<ApiPromise> => {
-
   if (!api) {
     // api not initialized or configuration changed
     const config = await getConfiguration();

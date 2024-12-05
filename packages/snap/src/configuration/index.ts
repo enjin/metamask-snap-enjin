@@ -29,5 +29,6 @@ export async function getConfiguration(): Promise<SnapConfig> {
   if (!state || !state.config) {
     return defaultConfiguration;
   }
-  return JSON.parse(<string>state.config) as SnapConfig;
+
+  return JSON.parse(<string>state.config) as unknown as SnapConfig;
 }

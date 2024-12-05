@@ -130,7 +130,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }): Promise<an
         validConfigureSchema,
         'Invalid configuration schema - Network name should be provided'
       );
-    
       return await configure(
         request.params.configuration.networkName,
         request.params.configuration
@@ -177,11 +176,16 @@ export const onInstall: OnInstallHandler = async () => {
  * @returns A static panel rendered with custom UI.
  */
 export const onHomePage: OnHomePageHandler = async () => {
-  const [address, api, price] = await Promise.all([getAddress(), getApi(), getPrice()]);
+  const [address, api, price, config] = await Promise.all([
+    getAddress(),
+    getApi(),
+    getPrice(),
+    getConfiguration()
+  ]);
   const balances = await getBalances(api, address);
 
   return {
-    content: homePage(address, balances, price)
+    content: homePage(address, balances, price, config.networkName)
   };
 };
 
@@ -247,13 +251,12 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const homePage = (
   address: string,
   balances: { reserved: string; free: string },
   usd: string,
   network = enjinRelayConfiguration.networkName
-) => {
+): JSX.Element => {
   const free = new BN(balances.free);
   const reserved = new BN(balances.reserved);
   const decimals = new BN('1000000000000000000');
