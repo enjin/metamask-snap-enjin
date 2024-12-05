@@ -259,15 +259,12 @@ const homePage = (
 ): JSX.Element => {
   const free = new BN(balances.free);
   const reserved = new BN(balances.reserved);
+  const total = free.add(reserved);
   const decimals = new BN('1000000000000000000');
-  const price = Number(usd);
+  const price = new BN(usd);
 
-  const freeBalance = free.div(decimals).toNumber().toFixed(2);
-  const freeUsd = (free.div(decimals).toNumber() * price).toFixed(2);
-  const reservedBalance = reserved.div(decimals).toNumber().toFixed(2);
-  const reservedUsd = (reserved.div(decimals).toNumber() * price).toFixed(2);
-  const totalBalance = free.add(reserved).div(decimals).toNumber().toFixed(2);
-  const totalUsd = (free.add(reserved).div(decimals).toNumber() * price).toFixed(2);
+  const toCrypto = (balance: BN): string => balance.div(decimals).toNumber().toFixed(2);
+  const toUSd = (balance: BN): string => balance.div(decimals).mul(price).toNumber().toFixed(2);
 
   return (
     <Box>
@@ -290,13 +287,13 @@ const homePage = (
           <Heading>Balance</Heading>
         </Box>
         <Row label="Total">
-          <Value value={totalBalance + ' ENJ'} extra={'$' + totalUsd} />
+          <Value value={`${toCrypto(total)} ENJ`} extra={`$ ${toUSd(total)}`} />
         </Row>
         <Row label="Transferable">
-          <Value value={freeBalance + ' ENJ'} extra={'$' + freeUsd} />
+          <Value value={`${toCrypto(free)} ENJ`} extra={`$ ${toUSd(free)}`} />
         </Row>
         <Row label="Reserved">
-          <Value value={reservedBalance + ' ENJ'} extra={'$' + reservedUsd} />
+          <Value value={`${toCrypto(reserved)} ENJ`} extra={`$ ${toUSd(reserved)}`} />
         </Row>
       </Section>
       <Box direction="horizontal" alignment="space-around">
