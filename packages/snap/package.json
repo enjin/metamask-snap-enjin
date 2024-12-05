@@ -63,6 +63,7 @@
   "devDependencies": {
     "@enjin/metamask-enjin-types": "workspace:^",
     "@metamask/snaps-cli": "^6.5.2",
+    "@types/big.js": "^6",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^10.0.1",
     "@types/sinon": "^7.5.2",
@@ -87,6 +88,7 @@
     "@polkadot/keyring": "^13.0.2",
     "@polkadot/types": "^12.4.2",
     "@polkadot/util": "^13.0.2",
+    "big.js": "^6.2.2",
     "deepmerge": "^4.3.1",
     "flat": "^6.0.1",
     "superstruct": "^2.0.2"

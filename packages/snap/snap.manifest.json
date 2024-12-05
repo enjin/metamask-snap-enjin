@@ -7,7 +7,7 @@
     "url": "git+https://github.com/enjin/metamask-snap-enjin.git"
   },
   "source": {
-    "shasum": "A4zbQnrXJzEnXA87zQnLZ6YtXAbHst6JmiyOsaPJ8NM=",
+    "shasum": "R/YlOpbNrCGksDA1aaSVMi7GEWdUb7s061wnl6ZAMjg=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

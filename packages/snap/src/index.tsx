@@ -7,7 +7,8 @@ import type {
   OnInstallHandler,
   InputChangeEvent
 } from '@metamask/snaps-sdk';
-import { BN } from '@polkadot/util';
+import { BN, formatBalance } from '@polkadot/util';
+import Big from 'big.js';
 import { UserInputEventType } from '@metamask/snaps-sdk';
 import {
   Box,
@@ -44,7 +45,7 @@ import {
   validSignPayloadJSONSchema,
   validSignPayloadRawSchema
 } from './util/validation';
-import { getConfiguration } from './configuration';
+import { getConfiguration, getDefaultConfiguration } from './configuration';
 import {
   discordIco,
   docsIco,
@@ -260,11 +261,16 @@ const homePage = (
   const free = new BN(balances.free);
   const reserved = new BN(balances.reserved);
   const total = free.add(reserved);
-  const decimals = new BN('1000000000000000000');
-  const price = new BN(usd);
+  const base = new Big(10).pow(18);
 
-  const toCrypto = (balance: BN): string => balance.div(decimals).toNumber().toFixed(2);
-  const toUSd = (balance: BN): string => balance.div(decimals).mul(price).toNumber().toFixed(2);
+  const config = getDefaultConfiguration(network);
+  formatBalance.setDefaults({
+    decimals: config.unit.decimals,
+    unit: config.unit.symbol
+  });
+
+  const toUSd = (balance: BN): string =>
+    new Big(balance.toString()).div(base).times(new Big(usd)).toFixed(2);
 
   return (
     <Box>
@@ -287,13 +293,16 @@ const homePage = (
           <Heading>Balance</Heading>
         </Box>
         <Row label="Total">
-          <Value value={`${toCrypto(total)} ENJ`} extra={`$ ${toUSd(total)}`} />
+          <Value value={formatBalance(total, { forceUnit: '0' })} extra={`$ ${toUSd(total)}`} />
         </Row>
         <Row label="Transferable">
-          <Value value={`${toCrypto(free)} ENJ`} extra={`$ ${toUSd(free)}`} />
+          <Value value={formatBalance(free, { forceUnit: '0' })} extra={`$ ${toUSd(free)}`} />
         </Row>
         <Row label="Reserved">
-          <Value value={`${toCrypto(reserved)} ENJ`} extra={`$ ${toUSd(reserved)}`} />
+          <Value
+            value={`${formatBalance(reserved, { forceUnit: '0' })} ENJ`}
+            extra={`$ ${toUSd(reserved)}`}
+          />
         </Row>
       </Section>
       <Box direction="horizontal" alignment="space-around">
