@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "MetaMask snap for interacting with Enjin dApps",
   "proposedName": "Enjin Connect",
   "repository": {
