@@ -300,7 +300,7 @@ const homePage = (
         </Row>
         <Row label="Reserved">
           <Value
-            value={`${formatBalance(reserved, { forceUnit: '0' })} ENJ`}
+            value={formatBalance(reserved, { forceUnit: '0' })}
             extra={`$ ${toUSd(reserved)}`}
           />
         </Row>
