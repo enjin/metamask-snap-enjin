@@ -4,10 +4,12 @@ import {
   Copyable,
   Divider,
   Heading,
+  Italic,
   Row,
   Section,
   Text
 } from '@metamask/snaps-sdk/jsx';
+import { flatten } from 'flat';
 
 type RawDialogContent = {
   prompt: string;
@@ -66,7 +68,6 @@ export async function showRawPayloadDialog(message: RawDialogContent): Promise<b
 }
 
 export async function showJSONPayloadDialog(message: JSONDialogContent): Promise<boolean> {
-  console.log('message', message);
   return (await snap.request({
     method: 'snap_dialog',
     params: {
@@ -77,24 +78,30 @@ export async function showJSONPayloadDialog(message: JSONDialogContent): Promise
           <Row label="Address">
             <Address address={message.address} />
           </Row>
-          {message.info.map((info) => {
-            return typeof info.value === 'object' ? (
-              <Section>
-                <Heading>{info.message}</Heading>
-                <Divider />
-                {Object.entries(info.value).map(([key, value]) => (
-                  <Box alignment="start" direction="vertical">
-                    <Text>{key}</Text>
-                    <Text>{value}</Text>
-                  </Box>
-                ))}
-              </Section>
-            ) : (
-              <Row label={info.message}>
-                <Text>{info.value}</Text>
-              </Row>
-            );
-          })}
+          {message.info
+            .filter((m) => m.value)
+            .map((info) => {
+              return typeof info.value === 'object' ? (
+                <Section>
+                  <Heading>{info.message}</Heading>
+                  <Divider />
+                  {Object.entries(flatten(info.value))
+                    .filter(([k, v]) => typeof k === 'string' && typeof v === 'string')
+                    .map(([key, value]) => (
+                      <Box alignment="start" direction="vertical">
+                        <Text>
+                          <Italic>{key}</Italic>
+                        </Text>
+                        <Text>{value as string}</Text>
+                      </Box>
+                    ))}
+                </Section>
+              ) : (
+                <Row label={info.message}>
+                  <Text>{info.value}</Text>
+                </Row>
+              );
+            })}
         </Box>
       ),
       type: 'confirmation'

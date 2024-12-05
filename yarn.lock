@@ -3060,16 +3060,19 @@ __metadata:
     "@polkadot/keyring": "npm:^13.0.2"
     "@polkadot/types": "npm:^12.4.2"
     "@polkadot/util": "npm:^13.0.2"
+    "@types/big.js": "npm:^6"
     "@types/chai": "npm:^4.2.10"
     "@types/mocha": "npm:^10.0.1"
     "@types/sinon": "npm:^7.5.2"
     "@types/sinon-chai": "npm:^3.2.3"
     "@typescript-eslint/eslint-plugin": "npm:^5.27.1"
     "@typescript-eslint/parser": "npm:^5.27.1"
+    big.js: "npm:^6.2.2"
     chai: "npm:^4.2.0"
     concurrently: "npm:^5.1.0"
     deepmerge: "npm:^4.3.1"
     eslint: "npm:^8.17.0"
+    flat: "npm:^6.0.1"
     mocha: "npm:10.1.0"
     sinon: "npm:^9.0.1"
     sinon-chai: "npm:^3.5.0"
@@ -5868,6 +5871,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/big.js@npm:^6":
+  version: 6.2.2
+  resolution: "@types/big.js@npm:6.2.2"
+  checksum: 10c0/8f8472dfc1ef61c492e6841e86f8b9b97e5b024136bf7964e582a6a80ba73d4dbfd6cc23ed3b9d8fea69c7f30834fffd1c88e7fb981811f5c6ca608380b5ad67
+  languageName: node
+  linkType: hard
+
 "@types/bn.js@npm:^5.1.1":
   version: 5.1.1
   resolution: "@types/bn.js@npm:5.1.1"
@@ -7797,6 +7807,13 @@ __metadata:
   version: 5.2.2
   resolution: "big.js@npm:5.2.2"
   checksum: 10c0/230520f1ff920b2d2ce3e372d77a33faa4fa60d802fe01ca4ffbc321ee06023fe9a741ac02793ee778040a16b7e497f7d60c504d1c402b8fdab6f03bb785a25f
+  languageName: node
+  linkType: hard
+
+"big.js@npm:^6.2.2":
+  version: 6.2.2
+  resolution: "big.js@npm:6.2.2"
+  checksum: 10c0/58d204f6a1a92508dc2eb98d964e2cc6dabb37a3d9fc8a1f0b77a34dead7c11e17b173d9a6df2d5a7a0f78d5c80853a9ce6df29852da59ab10b088e981195165
   languageName: node
   linkType: hard
 
@@ -11196,6 +11213,15 @@ __metadata:
   bin:
     flat: cli.js
   checksum: 10c0/f178b13482f0cd80c7fede05f4d10585b1f2fdebf26e12edc138e32d3150c6ea6482b7f12813a1091143bad52bb6d3596bca51a162257a21163c0ff438baa5fe
+  languageName: node
+  linkType: hard
+
+"flat@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "flat@npm:6.0.1"
+  bin:
+    flat: cli.js
+  checksum: 10c0/9dc0dbe6e2acc012512a53130d9ba1c82c1a596cdca91b23d11716348361c4a68928409bb4433c4493a17595c3efd0cab9f09e23dd3f9962a58af225c3efc23a
   languageName: node
   linkType: hard
 
