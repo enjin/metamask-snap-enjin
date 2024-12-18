@@ -64,9 +64,9 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
   const onSubmit = useCallback(async () => {
     if (!state.polkadotSnap.snap) return;
 
-    if (amount && recipient) {
-      const api = state.polkadotSnap.snap.getMetamaskSnapApi();
+    try {
       if (amount && recipient) {
+        const api = state.polkadotSnap.snap.getMetamaskSnapApi();
         const convertedAmount = Number(amount) * 10 ** 18;
         const convertedTip = !tip ? BigInt(0) : Number(tip) * 10 ** 18;
         const txPayload = await api.generateTransactionPayload(
@@ -86,6 +86,8 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
       } else {
         showAlert('error', 'Please fill recipient and amount fields.');
       }
+    } catch (e) {
+      showAlert('error', 'There was an error while processing the transaction.');
     }
   }, [amount, tip, recipient, setAmount, setTip, setRecipient, onNewTransferCallback]);
 
