@@ -90,9 +90,11 @@ export const validConfigureSchema: Describe<{
 export const validGenerateTransactionPayloadSchema: Describe<{
   to: string;
   amount: string | number;
+  tip: string | null;
 }> = object({
   amount: union([string(), number()]),
-  to: string()
+  to: string(),
+  tip: optional(string())
 });
 
 export const validSendSchema: Describe<{
@@ -107,10 +109,4 @@ export const validSendSchema: Describe<{
     payload: SignaturePayloadJSONSchema,
     tx: string()
   })
-});
-
-export const validExportAccountSchema: Describe<{
-  jsonPassphrase: string;
-}> = object({
-  jsonPassphrase: optional(string())
 });
