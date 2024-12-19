@@ -18,3 +18,4 @@ jobs:
             fix
             feat
             chore
+            refactor

@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import type { SnapConfig } from '@enjin/metamask-enjin-types';
+import type { SnapConfig } from '@enjin-io/metamask-enjin-types';
 import { getConfiguration, getDefaultConfiguration } from '../../../src/configuration';
 import {
   defaultConfiguration,

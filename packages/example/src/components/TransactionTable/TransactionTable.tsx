@@ -9,7 +9,7 @@ import {
   TableRow
 } from '@material-ui/core';
 import { formatBalance } from '@polkadot/util';
-import type { Transaction } from '@enjin/metamask-enjin-types';
+import type { Transaction } from '@enjin-io/metamask-enjin-types';
 import { shortAddress } from '../../services/format';
 
 export interface TransactionTableProps {

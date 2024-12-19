@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Card, CardContent, CardHeader, Divider, Grid, Typography } from '@material-ui/core';
-import type { BlockInfo } from '@enjin/metamask-enjin-types';
+import type { BlockInfo } from '@enjin-io/metamask-enjin-types';
 
 export const LatestBlock = (props: { block: BlockInfo }): React.JSX.Element => {
   return (

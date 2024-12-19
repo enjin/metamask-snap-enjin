@@ -1,5 +1,5 @@
 {
-  "name": "@enjin/snap",
+  "name": "@enjin-io/snap",
   "version": "0.1.0",
   "description": "MetaMask snap for interacting with Enjin dApps",
   "main": "dist/bundle.js",
@@ -61,7 +61,7 @@
     }
   },
   "devDependencies": {
-    "@enjin/metamask-enjin-types": "workspace:^",
+    "@enjin-io/metamask-enjin-types": "workspace:^",
     "@metamask/snaps-cli": "6.5.2",
     "@types/big.js": "6.2.2",
     "@types/chai": "4.3.5",

@@ -1,4 +1,4 @@
-import type { SnapConfig } from '@enjin/metamask-enjin-types';
+import type { SnapConfig } from '@enjin-io/metamask-enjin-types';
 import { getMetamaskState } from '../rpc/getMetamaskState';
 import {
   defaultConfiguration,

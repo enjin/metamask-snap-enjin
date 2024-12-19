@@ -3,7 +3,7 @@ import sinonChai from 'sinon-chai';
 import { enjinMatrixConfiguration, canaryRelayConfiguration } from '../../../src/configuration/predefined';
 import { configure } from '../../../src/rpc/configure';
 import { EmptyMetamaskState } from '../../../src/interfaces';
-import { SnapConfig } from '@enjin/metamask-enjin-types';
+import { SnapConfig } from '@enjin-io/metamask-enjin-types';
 import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);

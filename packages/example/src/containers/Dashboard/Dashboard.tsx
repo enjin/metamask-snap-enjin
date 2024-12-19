@@ -16,8 +16,8 @@ import type {
   SnapNetworks,
   Transaction,
   SupportedSnapNetworks
-} from '@enjin/metamask-enjin-types';
-import type { MetamaskSnapApi } from '@enjin/metamask-enjin-adapter/src/types';
+} from '@enjin-io/metamask-enjin-types';
+import type { MetamaskSnapApi } from '@enjin-io/metamask-enjin-adapter/src/types';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Transfer } from '../../components/Transfer/Transfer';
 import { SignMessage } from '../../components/SignMessage/SignMessage';
