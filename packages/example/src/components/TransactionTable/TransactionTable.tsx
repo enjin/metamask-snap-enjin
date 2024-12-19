@@ -9,11 +9,13 @@ import {
   TableRow
 } from '@material-ui/core';
 import { formatBalance } from '@polkadot/util';
-import type { Transaction } from '@enjin-io/metamask-enjin-types';
+import type { SupportedSnapNetworks, Transaction } from '@enjin-io/metamask-enjin-types';
 import { shortAddress } from '../../services/format';
+import { getPolkascanTxUrl } from '../../services/polkascan';
 
 export interface TransactionTableProps {
   txs: Transaction[];
+  network: SupportedSnapNetworks;
 }
 
 export const TransactionTable = (props: TransactionTableProps): React.JSX.Element => {
@@ -34,7 +36,9 @@ export const TransactionTable = (props: TransactionTableProps): React.JSX.Elemen
           {props.txs.map((tx) => (
             <TableRow key={tx.hash}>
               <TableCell align="left" component="th" scope="row">
-                {tx.hash}
+                <a target="_blank" href={getPolkascanTxUrl(tx.hash, props.network)}>
+                  {tx.hash}
+                </a>
               </TableCell>
               <TableCell align="center" component="th" scope="row">
                 {tx.block}

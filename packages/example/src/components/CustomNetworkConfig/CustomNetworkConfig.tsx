@@ -1,9 +1,10 @@
+import type { SupportedSnapNetworks } from '@enjin-io/metamask-enjin-types';
 import { Input, Button, FormControl, InputLabel, Box, Grid } from '@material-ui/core';
 import type { FC } from 'react';
 import { useState } from 'react';
 
 export type CustomNetworkConfigInput = {
-  networkName?: string;
+  networkName?: SupportedSnapNetworks;
   genesisHash?: `0x${string}`;
   rpcUrl?: string;
   addressPrefix?: number;

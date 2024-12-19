@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import {
   Box,
   Card,
@@ -11,12 +11,7 @@ import {
   Select,
   Typography
 } from '@material-ui/core';
-import type {
-  BlockInfo,
-  SnapNetworks,
-  Transaction,
-  SupportedSnapNetworks
-} from '@enjin-io/metamask-enjin-types';
+import type { BlockInfo, Transaction, SupportedSnapNetworks } from '@enjin-io/metamask-enjin-types';
 import type { MetamaskSnapApi } from '@enjin-io/metamask-enjin-adapter/src/types';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Transfer } from '../../components/Transfer/Transfer';
@@ -40,12 +35,12 @@ export const Dashboard = (): React.JSX.Element => {
     number: ''
   });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [network, setNetwork] = useState<SnapNetworks>('enjin-relaychain');
-  const [rpc, setRpc] = useState(
-    new ApiPromise({ provider: new WsProvider('wss://rpc.relay.blockchain.enjin.io') })
-  );
+  const [network, setNetwork] = useState<SupportedSnapNetworks>('enjin-relaychain');
+  const [rpc, setRpc] = useState<ApiPromise>();
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
   const [customNetworkInputs, setCustomNetworkInputs] = useState(false);
+  const unsubBalanceWatch = useRef<() => void>(() => {});
+  const unsubHeadWatch = useRef<() => void>(() => {});
 
   const showCustomNetworkName = ![
     'enjin-relaychain',
@@ -79,7 +74,6 @@ export const Dashboard = (): React.JSX.Element => {
     if (!api) return;
     await api.setConfiguration({ networkName: networkName });
     setNetwork(networkName);
-    setRpc(new ApiPromise({ provider: new WsProvider(networkRpcs[networkName]) }));
   };
 
   const onCustomNetworkConnect = async (submitData: CustomNetworkConfigInput): Promise<void> => {
@@ -121,35 +115,63 @@ export const Dashboard = (): React.JSX.Element => {
 
   useEffect(() => {
     void (async () => {
+      if (!rpc) {
+        return;
+      }
       const isReady = await rpc.isReady;
 
       if (api && isReady) {
-        const balances = await api.getBalances();
         const address = await api.getAddress();
+        const pk = await api.getPublicKey();
 
         setAddress(address);
-        setNonce((await rpc.derive.balances.account(address)).accountNonce.toString());
-        setPublicKey(await api.getPublicKey());
-        setBalance(balances.free);
-        setLatestBlock(await api.getLatestBlock());
+        setPublicKey(pk);
         setTransactions(await api.getAllTransactions());
       }
     })();
-  }, [api, network]);
+  }, [api, network, rpc, nonce]);
+
+  const handleBalanceWatch = useCallback(() => {
+    if (!rpc) return;
+
+    if (!address) return;
+    rpc.isReady
+      .then(async (api) => {
+        const unsubHead = await rpc.rpc.chain.subscribeNewHeads((header) => {
+          setLatestBlock({
+            hash: header.hash.toString(),
+            number: header.number.toString()
+          });
+        });
+
+        const unsub = (await api.query.system.account(
+          address,
+          ({ nonce, data: balance }: { nonce: string; data: { free: string } }) => {
+            setBalance(balance.free.toString());
+            setNonce(nonce.toString());
+          }
+        )) as unknown as () => void;
+
+        unsubHeadWatch.current = unsubHead;
+        unsubBalanceWatch.current = unsub;
+      })
+      .catch(console.error);
+  }, [rpc, address]);
 
   useEffect(() => {
-    // periodically check balance
-    const interval = setInterval(async () => {
-      if (api) {
-        const balances = await api.getBalances();
-        const nonce = (await rpc.derive.balances.account(address)).accountNonce.toString();
+    if (!address) return;
+    unsubBalanceWatch.current && unsubBalanceWatch.current();
+    handleBalanceWatch();
+  }, [rpc, address]);
 
-        setBalance(balances.free);
-        setNonce(nonce);
-      }
-    }, 6000); // every 6 seconds
-    return () => clearInterval(interval);
-  }, [api, balance, setBalance]);
+  useEffect(() => {
+    const rpc = new ApiPromise({ provider: new WsProvider(networkRpcs[network]) });
+    setRpc(rpc);
+
+    return () => {
+      rpc?.disconnect().catch(console.error);
+    };
+  }, [network]);
 
   return (
     <Container maxWidth="lg">
@@ -220,7 +242,7 @@ export const Dashboard = (): React.JSX.Element => {
                 <Card style={{ margin: '1rem 0' }}>
                   <CardHeader title="Account transactions" />
                   <CardContent>
-                    <TransactionTable txs={transactions} />
+                    <TransactionTable network={network} txs={transactions} />
                   </CardContent>
                 </Card>
               </Grid>

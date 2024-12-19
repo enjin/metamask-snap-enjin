@@ -123,7 +123,7 @@ export interface UnitConfiguration {
 
 export type SupportedSnapNetworks = 'enjin-relaychain' | 'enjin-matrixchain' | 'canary-relaychain' | 'canary-matrixchain';
 
-export type SnapNetworks = SupportedSnapNetworks | string;
+export type SnapNetworks = SupportedSnapNetworks;
 
 export type SnapConfig = {
   wsRpcUrl?: string;
