@@ -46,8 +46,7 @@ export const Dashboard = (): React.JSX.Element => {
     'enjin-relaychain',
     'enjin-matrixchain',
     'canary-relaychain',
-    'canary-matrixchain',
-    'custom'
+    'canary-matrixchain'
   ].includes(network);
 
   const handleNewTransaction = useCallback(async () => {
@@ -159,7 +158,6 @@ export const Dashboard = (): React.JSX.Element => {
                 <MenuItem value={'enjin-matrixchain'}>Enjin Matrixchain</MenuItem>
                 <MenuItem value={'canary-relaychain'}>Canary Relaychain</MenuItem>
                 <MenuItem value={'canary-matrixchain'}>Canary Matrixchain</MenuItem>
-                <MenuItem value={'custom'}>Custom</MenuItem>
                 {showCustomNetworkName && <MenuItem value={network}>{network}</MenuItem>}
               </Select>
               {customNetworkInputs && <CustonNetworkConfig onSubmit={onCustomNetworkConnect} />}
