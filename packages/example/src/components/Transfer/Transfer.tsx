@@ -26,6 +26,7 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
 
   const [recipient, setRecipient] = useState<string>('');
   const [amount, setAmount] = useState<string | number>('');
+  const [tip, setTip] = useState<string | number>('');
 
   const [alert, setAlert] = useState(false);
   const [severity, setSeverity] = useState('success' as AlertSeverity);
@@ -46,6 +47,13 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
     [setAmount]
   );
 
+  const handleTipChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTip(event.target.value);
+    },
+    [setTip]
+  );
+
   const showAlert = (severity: AlertSeverity, message: string, polkasacanUrl?: string): void => {
     setPolkascanUrl(polkasacanUrl ? polkasacanUrl : '');
     setSeverity(severity);
@@ -55,19 +63,23 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
 
   const onSubmit = useCallback(async () => {
     if (!state.polkadotSnap.snap) return;
+
     if (amount && recipient) {
       const api = state.polkadotSnap.snap.getMetamaskSnapApi();
       if (amount && recipient) {
-        const convertedAmount = BigInt(amount) * BigInt('100000000000000000');
+        const convertedAmount = Number(amount) * 10 ** 18;
+        const convertedTip = !tip ? BigInt(0) : Number(tip) * 10 ** 18;
         const txPayload = await api.generateTransactionPayload(
           convertedAmount.toString(),
-          recipient
+          recipient,
+          convertedTip.toString()
         );
         const signedTx = await api.signPayloadJSON(txPayload.payload);
         const tx = await api.send(signedTx, txPayload);
         showAlert('info', `Transaction: ${JSON.stringify(tx, null, 2)}`);
         // clear fields
         setAmount('');
+        setTip('');
         setRecipient('');
         // invoke provided callback to inform parent component that new tx is sent
         onNewTransferCallback();
@@ -75,7 +87,7 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
         showAlert('error', 'Please fill recipient and amount fields.');
       }
     }
-  }, [amount, recipient, setAmount, setRecipient, onNewTransferCallback]);
+  }, [amount, tip, recipient, setAmount, setTip, setRecipient, onNewTransferCallback]);
 
   return (
     <Card style={{ margin: '1rem 0' }}>
@@ -107,6 +119,25 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
               label="Amount"
               variant="outlined"
               value={amount}
+            ></TextField>
+          </Grid>
+        </Grid>
+        <Box style={{ margin: '1rem' }} />
+        <Grid container alignItems="center" justifyContent="space-between">
+          <Grid item xs={12}>
+            <TextField
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">{`${getCurrency(network)}`}</InputAdornment>
+                )
+              }}
+              onChange={handleTipChange}
+              size="medium"
+              fullWidth
+              id="recipient"
+              label="Tip"
+              variant="outlined"
+              value={tip}
             ></TextField>
           </Grid>
         </Grid>

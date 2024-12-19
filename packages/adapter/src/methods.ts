@@ -120,10 +120,11 @@ export async function sendSignedData(
 export async function generateTransactionPayload(
   this: MetamaskPolkadotSnap,
   amount: string | number,
-  to: string
+  to: string,
+  tip: string | null
 ): Promise<TxPayload> {
   return (await sendSnapMethod(
-    { method: 'generateTransactionPayload', params: { amount, to } },
+    { method: 'generateTransactionPayload', params: { amount, to, tip } },
     this.snapId
   )) as TxPayload;
 }

@@ -6,7 +6,8 @@ import { getAddress } from './getAddress';
 export async function generateTransactionPayload(
   api: ApiPromise,
   to: string,
-  amount: string | number
+  amount: string | number,
+  tip: string | null
 ): Promise<TxPayload> {
   // fetch last signed block and account address
   const [signedBlock, address] = await Promise.all([api.rpc.chain.getBlock(), getAddress()]);
@@ -16,9 +17,10 @@ export async function generateTransactionPayload(
     blockHash: signedBlock.block.header.hash,
     era: api.createType('ExtrinsicEra', {
       current: signedBlock.block.header.number,
-      period: 50
+      period: 64
     }),
-    nonce
+    nonce,
+    tip
   };
 
   // define transaction method

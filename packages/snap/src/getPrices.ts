@@ -1,5 +1,3 @@
-// import { updateSnapState } from "./rpc/stateManagement";
-
 export default async function getPrice(): Promise<string> {
   try {
     const response = await getReq(

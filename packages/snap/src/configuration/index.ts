@@ -8,7 +8,7 @@ import {
   canaryMatrixConfiguration
 } from './predefined';
 
-export function getDefaultConfiguration(networkName: string): SnapConfig {
+export function getDefaultConfiguration(networkName?: string): SnapConfig {
   switch (networkName) {
     case 'enjin-relaychain':
       return enjinRelayConfiguration;
