@@ -1,16 +1,16 @@
-import type { ApiPromise } from '@polkadot/api/';
+import { ApiPromise } from '@polkadot/api/';
 import type { SubmittableExtrinsic } from '@polkadot/api/types';
 import type { TxPayload } from '@enjin/metamask-enjin-types';
-import { getAddress } from './getAddress';
 
-export async function generateTransactionPayload(
-  api: ApiPromise,
+export async function generateTransferPayload(
+  address: string,
   to: string,
   amount: string | number,
   tip: string | null
 ): Promise<TxPayload> {
   // fetch last signed block and account address
-  const [signedBlock, address] = await Promise.all([api.rpc.chain.getBlock(), getAddress()]);
+  const api = await ApiPromise.create();
+  const signedBlock = await api.rpc.chain.getBlock();
   // create signer options
   const nonce = (await api.derive.balances.account(address)).accountNonce;
   const signerOptions = {
