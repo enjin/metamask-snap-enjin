@@ -18,6 +18,7 @@ import type {
   SupportedSnapNetworks
 } from '@enjin/metamask-enjin-types';
 import type { MetamaskSnapApi } from '@enjin/metamask-enjin-adapter/src/types';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Transfer } from '../../components/Transfer/Transfer';
 import { SignMessage } from '../../components/SignMessage/SignMessage';
 import { TransactionTable } from '../../components/TransactionTable/TransactionTable';
@@ -33,12 +34,16 @@ export const Dashboard = (): React.JSX.Element => {
   const [balance, setBalance] = useState('0');
   const [address, setAddress] = useState('');
   const [publicKey, setPublicKey] = useState('');
+  const [nonce, setNonce] = useState('0');
   const [latestBlock, setLatestBlock] = useState<BlockInfo>({
     hash: '',
     number: ''
   });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [network, setNetwork] = useState<SnapNetworks>('enjin-relaychain');
+  const [rpc, setRpc] = useState(
+    new ApiPromise({ provider: new WsProvider('wss://rpc.relay.blockchain.enjin.io') })
+  );
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
   const [customNetworkInputs, setCustomNetworkInputs] = useState(false);
 
@@ -46,9 +51,15 @@ export const Dashboard = (): React.JSX.Element => {
     'enjin-relaychain',
     'enjin-matrixchain',
     'canary-relaychain',
-    'canary-matrixchain',
-    'custom'
+    'canary-matrixchain'
   ].includes(network);
+
+  const networkRpcs = {
+    'enjin-relaychain': 'wss://rpc.relay.blockchain.enjin.io',
+    'enjin-matrixchain': 'wss://rpc.matrix.blockchain.enjin.io',
+    'canary-relaychain': 'wss://rpc.relay.canary.enjin.io',
+    'canary-matrixchain': 'wss://rpc.matrix.canary.enjin.io'
+  };
 
   const handleNewTransaction = useCallback(async () => {
     if (!api) return;
@@ -68,6 +79,7 @@ export const Dashboard = (): React.JSX.Element => {
     if (!api) return;
     await api.setConfiguration({ networkName: networkName });
     setNetwork(networkName);
+    setRpc(new ApiPromise({ provider: new WsProvider(networkRpcs[networkName]) }));
   };
 
   const onCustomNetworkConnect = async (submitData: CustomNetworkConfigInput): Promise<void> => {
@@ -109,10 +121,14 @@ export const Dashboard = (): React.JSX.Element => {
 
   useEffect(() => {
     void (async () => {
-      if (api) {
-        const balances = await api.getBalances();
+      const isReady = await rpc.isReady;
 
-        setAddress(await api.getAddress());
+      if (api && isReady) {
+        const balances = await api.getBalances();
+        const address = await api.getAddress();
+
+        setAddress(address);
+        setNonce((await rpc.derive.balances.account(address)).accountNonce.toString());
         setPublicKey(await api.getPublicKey());
         setBalance(balances.free);
         setLatestBlock(await api.getLatestBlock());
@@ -126,10 +142,12 @@ export const Dashboard = (): React.JSX.Element => {
     const interval = setInterval(async () => {
       if (api) {
         const balances = await api.getBalances();
+        const nonce = (await rpc.derive.balances.account(address)).accountNonce.toString();
 
         setBalance(balances.free);
+        setNonce(nonce);
       }
-    }, 60000); // every 60 seconds
+    }, 6000); // every 6 seconds
     return () => clearInterval(interval);
   }, [api, balance, setBalance]);
 
@@ -159,7 +177,6 @@ export const Dashboard = (): React.JSX.Element => {
                 <MenuItem value={'enjin-matrixchain'}>Enjin Matrixchain</MenuItem>
                 <MenuItem value={'canary-relaychain'}>Canary Relaychain</MenuItem>
                 <MenuItem value={'canary-matrixchain'}>Canary Matrixchain</MenuItem>
-                <MenuItem value={'custom'}>Custom</MenuItem>
                 {showCustomNetworkName && <MenuItem value={network}>{network}</MenuItem>}
               </Select>
               {customNetworkInputs && <CustonNetworkConfig onSubmit={onCustomNetworkConnect} />}
@@ -176,6 +193,7 @@ export const Dashboard = (): React.JSX.Element => {
                   network={network}
                   address={address}
                   balance={balance}
+                  nonce={nonce}
                   publicKey={publicKey}
                 />
               </Grid>
@@ -183,7 +201,14 @@ export const Dashboard = (): React.JSX.Element => {
             <Box style={{ margin: '1rem' }} />
             <Grid container spacing={3} alignItems="stretch">
               <Grid item md={6} xs={12}>
-                <Transfer network={network} onNewTransferCallback={handleNewTransaction} />
+                <Transfer
+                  rpc={rpc}
+                  network={network}
+                  address={address}
+                  nonce={nonce}
+                  block={latestBlock}
+                  onNewTransferCallback={handleNewTransaction}
+                />
               </Grid>
               <Grid item md={6} xs={12}>
                 <SignMessage address={address} />

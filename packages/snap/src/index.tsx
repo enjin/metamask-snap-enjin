@@ -35,11 +35,9 @@ import { getBlock } from './rpc/substrate/getBlock';
 import { getApi, resetApi } from './polkadot/api';
 import { configure } from './rpc/configure';
 import { signPayloadJSON, signPayloadRaw } from './rpc/substrate/sign';
-import { generateTransactionPayload } from './rpc/generateTransactionPayload';
 import { send } from './rpc/send';
 import {
   validConfigureSchema,
-  validGenerateTransactionPayloadSchema,
   validGetBlockSchema,
   validSendSchema,
   validSignPayloadJSONSchema,
@@ -70,7 +68,6 @@ const apiDependentMethods = [
   'getChainHead',
   'signPayloadJSON',
   'signPayloadRaw',
-  'generateTransactionPayload',
   'send'
 ];
 
@@ -136,10 +133,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }): Promise<an
         request.params.configuration
       );
     }
-    case 'generateTransactionPayload':
-      assert(request.params, validGenerateTransactionPayloadSchema);
-      return await generateTransactionPayload(api, request.params.to, request.params.amount);
-
     case 'send':
       assert(request.params, validSendSchema);
       return await send(

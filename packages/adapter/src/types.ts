@@ -30,8 +30,6 @@ export interface MetamaskSnapApi {
   signPayloadRaw(payload: SignerPayloadRaw): Promise<string>;
 
   send(signature: string, txPayload: TxPayload): Promise<Transaction>;
-
-  generateTransactionPayload(amount: string | number, to: string): Promise<TxPayload>;
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {

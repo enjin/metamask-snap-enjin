@@ -7,6 +7,7 @@ export interface AccountProps {
   address: string;
   publicKey: string;
   balance: string;
+  nonce: string;
   network: string;
 }
 
@@ -33,6 +34,9 @@ export const Account = (props: AccountProps): React.JSX.Element => {
                 withUnit: getCurrency(props.network)
               })}
             </Typography>
+            <Box style={{ margin: '0.5rem' }} />
+            <Typography variant="h6">ACCOUNT NONCE:</Typography>
+            <Typography variant="subtitle2">{props.nonce}</Typography>
           </Grid>
         </Grid>
       </CardContent>
