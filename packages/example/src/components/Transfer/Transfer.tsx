@@ -11,7 +11,7 @@ import {
   TextField
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import type { BlockInfo } from '@enjin/metamask-enjin-types';
+import type { BlockInfo } from '@enjin-io/metamask-enjin-types';
 import type { ApiPromise } from '@polkadot/api';
 import { getCurrency } from '../../services/format';
 import { MetaMaskContext } from '../../context/metamask';

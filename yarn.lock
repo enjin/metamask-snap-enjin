@@ -3024,9 +3024,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@enjin/metamask-enjin-adapter@workspace:^, @enjin/metamask-enjin-adapter@workspace:packages/adapter":
+"@enjin-io/metamask-enjin-adapter@workspace:^, @enjin-io/metamask-enjin-adapter@workspace:packages/adapter":
   version: 0.0.0-use.local
-  resolution: "@enjin/metamask-enjin-adapter@workspace:packages/adapter"
+  resolution: "@enjin-io/metamask-enjin-adapter@workspace:packages/adapter"
   dependencies:
     "@polkadot/api": "npm:12.4.2"
     "@polkadot/extension-inject": "npm:0.52.3"
@@ -3039,19 +3039,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@enjin/metamask-enjin-types@workspace:^, @enjin/metamask-enjin-types@workspace:packages/types":
+"@enjin-io/metamask-enjin-types@workspace:^, @enjin-io/metamask-enjin-types@workspace:packages/types":
   version: 0.0.0-use.local
-  resolution: "@enjin/metamask-enjin-types@workspace:packages/types"
+  resolution: "@enjin-io/metamask-enjin-types@workspace:packages/types"
   dependencies:
     "@polkadot/api": "npm:12.4.2"
   languageName: unknown
   linkType: soft
 
-"@enjin/snap@workspace:packages/snap":
+"@enjin-io/snap@workspace:packages/snap":
   version: 0.0.0-use.local
-  resolution: "@enjin/snap@workspace:packages/snap"
+  resolution: "@enjin-io/snap@workspace:packages/snap"
   dependencies:
-    "@enjin/metamask-enjin-types": "workspace:^"
+    "@enjin-io/metamask-enjin-types": "workspace:^"
     "@metamask/key-tree": "npm:9.1.2"
     "@metamask/snaps-cli": "npm:6.5.2"
     "@metamask/snaps-sdk": "npm:6.10.0"
@@ -10912,8 +10912,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "example@workspace:packages/example"
   dependencies:
-    "@enjin/metamask-enjin-adapter": "workspace:^"
-    "@enjin/metamask-enjin-types": "workspace:^"
+    "@enjin-io/metamask-enjin-adapter": "workspace:^"
+    "@enjin-io/metamask-enjin-types": "workspace:^"
     "@material-ui/core": "npm:4.12.4"
     "@material-ui/icons": "npm:4.11.3"
     "@material-ui/lab": "npm:4.0.0-alpha.61"

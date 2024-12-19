@@ -7,9 +7,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build:snap": "yarn workspace @enjin/snap build",
-    "build:adapter": "yarn workspace @enjin/metamask-enjin-adapter build",
-    "start:snap": "yarn workspace @enjin/snap serve",
+    "build:snap": "yarn workspace @enjin-io/snap build",
+    "build:adapter": "yarn workspace @enjin-io/metamask-enjin-adapter build",
+    "start:snap": "yarn workspace @enjin-io/snap serve",
     "start:example": "yarn workspace example start",
     "predemo": "yarn run build:snap && yarn run build:adapter",
     "build": "yarn workspaces foreach -Avpt run build",

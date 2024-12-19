@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import type { SnapConfig } from '@enjin/metamask-enjin-types';
+import type { SnapConfig } from '@enjin-io/metamask-enjin-types';
 import { getDefaultConfiguration } from '../configuration';
 import { getMetamaskState } from './getMetamaskState';
 

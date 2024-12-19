@@ -1,5 +1,5 @@
 {
-  "name": "@enjin/metamask-enjin-types",
+  "name": "@enjin-io/metamask-enjin-types",
   "version": "0.1.0",
   "types": "./index.d.ts",
   "author": "Enjinb <contact@enjin.io>",

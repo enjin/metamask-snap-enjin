@@ -2,7 +2,7 @@ import type { ApiPromise } from '@polkadot/api';
 import type { SubmittableExtrinsic } from '@polkadot/api/types';
 import type { SignerPayloadJSON } from '@polkadot/types/types/extrinsic';
 import type { GenericSignerPayload } from '@polkadot/types/extrinsic/SignerPayload';
-import type { BlockInfo } from '@enjin/metamask-enjin-types';
+import type { BlockInfo } from '@enjin-io/metamask-enjin-types';
 
 interface TxPayload {
   payload: SignerPayloadJSON;
