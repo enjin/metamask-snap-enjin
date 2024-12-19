@@ -55,14 +55,6 @@ export interface SignPayloadRawRequest {
   };
 }
 
-export interface GenerateTransactionPayload {
-  method: 'generateTransactionPayload';
-  params: {
-    amount: string | number;
-    to: string;
-  };
-}
-
 export interface SendUnitRequest {
   method: 'send';
   params: {
@@ -85,8 +77,7 @@ export type MetamaskPolkadotRpcRequest =
   | GetChainHeadRequest
   | SignPayloadJSONRequest
   | SignPayloadRawRequest
-  | SendUnitRequest
-  | GenerateTransactionPayload;
+  | SendUnitRequest;
 
 type Method = MetamaskPolkadotRpcRequest['method'];
 

@@ -11,19 +11,32 @@ import {
   TextField
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import type { BlockInfo } from '@enjin/metamask-enjin-types';
+import type { ApiPromise } from '@polkadot/api';
 import { getCurrency } from '../../services/format';
 import { MetaMaskContext } from '../../context/metamask';
+import { generateTransferPayload } from '../../utils/generateTransfer';
 
 interface ITransferProps {
+  rpc: ApiPromise;
   network: string;
+  address: string;
+  nonce: string;
+  block: BlockInfo;
   onNewTransferCallback: () => void;
 }
 
 type AlertSeverity = 'success' | 'warning' | 'info' | 'error';
 
-export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallback }) => {
+export const Transfer: React.FC<ITransferProps> = ({
+  rpc,
+  network,
+  address,
+  nonce,
+  block,
+  onNewTransferCallback
+}) => {
   const [state] = useContext(MetaMaskContext);
-
   const [recipient, setRecipient] = useState<string>('');
   const [amount, setAmount] = useState<string | number>('');
   const [tip, setTip] = useState<string | number>('');
@@ -69,11 +82,16 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
         const api = state.polkadotSnap.snap.getMetamaskSnapApi();
         const convertedAmount = Number(amount) * 10 ** 18;
         const convertedTip = !tip ? BigInt(0) : Number(tip) * 10 ** 18;
-        const txPayload = await api.generateTransactionPayload(
-          convertedAmount.toString(),
+        const txPayload = await generateTransferPayload(
+          rpc,
+          address,
+          nonce,
           recipient,
+          convertedAmount.toString(),
+          block,
           convertedTip.toString()
         );
+
         const signedTx = await api.signPayloadJSON(txPayload.payload);
         const tx = await api.send(signedTx, txPayload);
         showAlert('info', `Transaction: ${JSON.stringify(tx, null, 2)}`);

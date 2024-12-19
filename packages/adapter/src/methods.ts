@@ -116,15 +116,3 @@ export async function sendSignedData(
   );
   return response as Transaction;
 }
-
-export async function generateTransactionPayload(
-  this: MetamaskPolkadotSnap,
-  amount: string | number,
-  to: string,
-  tip: string | null
-): Promise<TxPayload> {
-  return (await sendSnapMethod(
-    { method: 'generateTransactionPayload', params: { amount, to, tip } },
-    this.snapId
-  )) as TxPayload;
-}

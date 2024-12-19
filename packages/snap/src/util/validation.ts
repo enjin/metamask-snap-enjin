@@ -87,16 +87,6 @@ export const validConfigureSchema: Describe<{
   })
 });
 
-export const validGenerateTransactionPayloadSchema: Describe<{
-  to: string;
-  amount: string | number;
-  tip: string | null;
-}> = object({
-  amount: union([string(), number()]),
-  to: string(),
-  tip: optional(string())
-});
-
 export const validSendSchema: Describe<{
   signature: string;
   txPayload: {
