@@ -15,7 +15,6 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { stringToHex } from '@polkadot/util/string';
 import { Alert } from '@material-ui/lab';
 import { MetaMaskContext } from '../../context/metamask';
 
@@ -54,11 +53,9 @@ export const SignMessage: React.FC<Props> = ({ address }) => {
       if (textFieldValue) {
         const api = state.polkadotSnap.snap.getMetamaskSnapApi();
         if (api && api.signPayloadRaw) {
-          const messageAsHex = stringToHex(textFieldValue);
-
           const messageSignResponse = await api.signPayloadRaw({
             address: address,
-            data: messageAsHex,
+            data: textFieldValue,
             type: 'bytes'
           });
           setTextFieldValue('');

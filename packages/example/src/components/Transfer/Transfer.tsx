@@ -18,7 +18,7 @@ import { MetaMaskContext } from '../../context/metamask';
 import { generateTransferPayload } from '../../utils/generateTransfer';
 
 interface ITransferProps {
-  rpc: ApiPromise;
+  rpc?: ApiPromise;
   network: string;
   address: string;
   nonce: string;
@@ -76,6 +76,7 @@ export const Transfer: React.FC<ITransferProps> = ({
 
   const onSubmit = useCallback(async () => {
     if (!state.polkadotSnap.snap) return;
+    if (!rpc) return;
 
     try {
       if (amount && recipient) {

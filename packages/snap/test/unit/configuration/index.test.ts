@@ -50,7 +50,7 @@ describe('Test configuration functions', function () {
     it('should return configuration saved in state"', async function () {
       const customConfiguration: SnapConfig = {
         addressPrefix: 5,
-        networkName: 'westend',
+        networkName: 'enjin-relaychain',
         wsRpcUrl: 'url',
         genesisHash: '0xhash',
       };
