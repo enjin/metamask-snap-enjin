@@ -1,8 +1,37 @@
+import type { EIP6963AnnounceProviderEvent, EIP1193Provider } from './types';
+
 export function hasMetaMask(): boolean {
   if (!window.ethereum) {
     return false;
   }
   return window.ethereum.isMetaMask;
+}
+
+export function getMetaMask(): Promise<EIP1193Provider> {
+  return new Promise<EIP1193Provider>((resolve, reject) => {
+    let isResolved = false;
+
+    const handleAnnounce = (event: EIP6963AnnounceProviderEvent): void => {
+      if (event.detail.provider.isMetaMask) {
+        resolve(event.detail.provider);
+        isResolved = true;
+      }
+    };
+
+    window.addEventListener('eip6963:announceProvider', handleAnnounce as unknown as EventListener);
+    window.dispatchEvent(new Event('eip6963:requestProvider'));
+
+    setTimeout(() => {
+      window.removeEventListener(
+        'eip6963:announceProvider',
+        handleAnnounce as unknown as EventListener
+      );
+
+      if (!isResolved) {
+        reject(new Error('MetaMask provider not found'));
+      }
+    }, 1000);
+  });
 }
 
 export async function isPolkadotSnapInstalled(
@@ -30,7 +59,9 @@ export type GetSnapsResponse = {
 };
 
 async function getWalletSnaps(): Promise<GetSnapsResponse> {
-  return await window.ethereum.request({
+  const metamask = await getMetaMask();
+
+  return await metamask.request({
     method: 'wallet_getSnaps'
   });
 }
