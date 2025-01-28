@@ -1,7 +1,12 @@
 import '@polkadot/types-augment';
 import type { SnapConfig } from '@enjin-io/metamask-enjin-types';
 import { MetamaskPolkadotSnap } from './snap';
-import { hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled } from './utils';
+import {
+  getMetaMask,
+  hasMetaMask,
+  isMetamaskSnapsSupported,
+  isPolkadotSnapInstalled
+} from './utils';
 
 const defaultSnapOrigin = 'npm:@enjin-io/snap';
 
@@ -31,8 +36,8 @@ export async function enablePolkadotSnap(
   const isInstalled = await isPolkadotSnapInstalled(snapId);
 
   if (!isInstalled) {
-    // // enable snap
-    await window.ethereum.request({
+    const metamask = await getMetaMask();
+    await metamask.request({
       method: 'wallet_requestSnaps',
       params: {
         [snapId]: { ...snapInstallationParams }

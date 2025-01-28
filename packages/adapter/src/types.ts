@@ -49,4 +49,23 @@ declare global {
       request: <T>(request: SnapRpcMethodRequest | { method: string; params?: any }) => Promise<T>;
     };
   }
+  interface WindowEventMap {
+    'eip6963:announceProvider': CustomEvent<EIP6963AnnounceProviderEvent>;
+  }
 }
+
+interface EIP6963ProviderInfo {
+  walletId: string;
+  uuid: string;
+  name: string;
+  icon: string;
+}
+
+export type EIP1193Provider = typeof window.ethereum;
+
+export type EIP6963AnnounceProviderEvent = {
+  detail: {
+    info: EIP6963ProviderInfo;
+    provider: EIP1193Provider;
+  };
+};

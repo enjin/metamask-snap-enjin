@@ -11,12 +11,15 @@ import type {
 } from '@enjin-io/metamask-enjin-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { MetamaskPolkadotSnap } from './snap';
+import { getMetaMask } from './utils';
 
 async function sendSnapMethod(
   request: MetamaskPolkadotRpcRequest,
   snapId: string
 ): Promise<unknown> {
-  return await window.ethereum.request({
+  const metamask = await getMetaMask();
+
+  return await metamask.request({
     method: 'wallet_invokeSnap',
     params: {
       request,
