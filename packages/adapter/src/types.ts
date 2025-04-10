@@ -41,6 +41,8 @@ declare global {
     ethereum: {
       isMetaMask: boolean;
       isPhantom: boolean;
+      detected: EIP1193Provider[];
+      providers: EIP1193Provider[];
 
       send: (
         request: SnapRpcMethodRequest | { method: string; params?: never[] }
