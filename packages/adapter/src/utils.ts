@@ -8,50 +8,52 @@ export function hasMetaMask(): boolean {
   return window.ethereum.isMetaMask;
 }
 
-export async function hasSnapsSupport(provider: EIP1193Provider = window.ethereum) {
-    try {
-        await provider.request({
-            method: 'wallet_getSnaps',
-        });
+export async function hasSnapsSupport(
+  provider: EIP1193Provider = window.ethereum
+): Promise<boolean> {
+  try {
+    await provider.request({
+      method: 'wallet_getSnaps'
+    });
 
-        return true;
-    } catch {
-        return false;
-    }
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function getMetaMask(): Promise<EIP1193Provider | null> {
-    if (typeof window === 'undefined') {
-        return null;
-    }
-
-    if (await hasSnapsSupport()) {
-        return window.ethereum;
-    }
-
-    if (window.ethereum?.detected) {
-        for (const provider of window.ethereum.detected) {
-            if (await hasSnapsSupport(provider)) {
-                return provider;
-            }
-        }
-    }
-
-    if (window.ethereum?.providers) {
-        for (const provider of window.ethereum.providers) {
-            if (await hasSnapsSupport(provider)) {
-                return provider;
-            }
-        }
-    }
-
-    const eip6963Provider = await getMetaMaskEIP6963Provider();
-
-    if (eip6963Provider && (await hasSnapsSupport(eip6963Provider))) {
-        return eip6963Provider;
-    }
-
+  if (typeof window === 'undefined') {
     return null;
+  }
+
+  if (await hasSnapsSupport()) {
+    return window.ethereum;
+  }
+
+  if (window.ethereum?.detected) {
+    for (const provider of window.ethereum.detected) {
+      if (await hasSnapsSupport(provider)) {
+        return provider;
+      }
+    }
+  }
+
+  if (window.ethereum?.providers) {
+    for (const provider of window.ethereum.providers) {
+      if (await hasSnapsSupport(provider)) {
+        return provider;
+      }
+    }
+  }
+
+  const eip6963Provider = await getMetaMaskEIP6963Provider();
+
+  if (eip6963Provider && (await hasSnapsSupport(eip6963Provider))) {
+    return eip6963Provider;
+  }
+
+  return null;
 }
 
 export function getMetaMaskEIP6963Provider(): Promise<EIP1193Provider> {
