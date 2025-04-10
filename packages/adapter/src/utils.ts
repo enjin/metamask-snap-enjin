@@ -105,8 +105,8 @@ export type GetSnapsResponse = {
   };
 };
 
-async function getWalletSnaps(): Promise<GetSnapsResponse> {
-  const metamask = await getMetamask();
+async function getWalletSnaps(): Promise<GetSnapsResponse | undefined> {
+  const metamask = await getMetaMask();
 
   return await metamask?.request({
     method: 'wallet_getSnaps'
