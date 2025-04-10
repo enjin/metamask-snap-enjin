@@ -40,6 +40,7 @@ declare global {
   interface Window {
     ethereum: {
       isMetaMask: boolean;
+      isPhantom: boolean;
 
       send: (
         request: SnapRpcMethodRequest | { method: string; params?: never[] }

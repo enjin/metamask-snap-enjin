@@ -12,7 +12,7 @@ export function getMetaMask(): Promise<EIP1193Provider> {
     let isResolved = false;
 
     const handleAnnounce = (event: EIP6963AnnounceProviderEvent): void => {
-      if (event.detail.provider.isMetaMask) {
+      if (event.detail.provider.isMetaMask && !event.detail.provider.isPhantom) {
         resolve(event.detail.provider);
         isResolved = true;
       }
