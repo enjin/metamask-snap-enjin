@@ -1,6 +1,6 @@
 {
   "name": "@enjin-io/snap",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "MetaMask snap for interacting with Enjin dApps",
   "main": "dist/bundle.js",
   "scripts": {
