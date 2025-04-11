@@ -4,15 +4,64 @@ export function hasMetaMask(): boolean {
   if (!window.ethereum) {
     return false;
   }
+
   return window.ethereum.isMetaMask;
 }
 
-export function getMetaMask(): Promise<EIP1193Provider> {
+export async function hasSnapsSupport(
+  provider: EIP1193Provider = window.ethereum
+): Promise<boolean> {
+  try {
+    await provider.request({
+      method: 'wallet_getSnaps'
+    });
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function getMetaMask(): Promise<EIP1193Provider | null> {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  if (await hasSnapsSupport()) {
+    return window.ethereum;
+  }
+
+  if (window.ethereum?.detected) {
+    for (const provider of window.ethereum.detected) {
+      if (await hasSnapsSupport(provider)) {
+        return provider;
+      }
+    }
+  }
+
+  if (window.ethereum?.providers) {
+    for (const provider of window.ethereum.providers) {
+      if (await hasSnapsSupport(provider)) {
+        return provider;
+      }
+    }
+  }
+
+  const eip6963Provider = await getMetaMaskEIP6963Provider();
+
+  if (eip6963Provider && (await hasSnapsSupport(eip6963Provider))) {
+    return eip6963Provider;
+  }
+
+  return null;
+}
+
+export function getMetaMaskEIP6963Provider(): Promise<EIP1193Provider> {
   return new Promise<EIP1193Provider>((resolve, reject) => {
     let isResolved = false;
 
     const handleAnnounce = (event: EIP6963AnnounceProviderEvent): void => {
-      if (event.detail.provider.isMetaMask) {
+      if (event.detail.provider.isMetaMask && !event.detail.provider.isPhantom) {
         resolve(event.detail.provider);
         isResolved = true;
       }
@@ -40,6 +89,7 @@ export async function isPolkadotSnapInstalled(
 ): Promise<boolean> {
   try {
     const walletSnaps = await getWalletSnaps();
+    if (!walletSnaps) return false;
     return !!Object.values(walletSnaps).find(
       (permission) => permission.id === snapOrigin && (!version || permission.version === version)
     );
@@ -58,10 +108,10 @@ export type GetSnapsResponse = {
   };
 };
 
-async function getWalletSnaps(): Promise<GetSnapsResponse> {
+async function getWalletSnaps(): Promise<GetSnapsResponse | undefined> {
   const metamask = await getMetaMask();
 
-  return await metamask.request({
+  return await metamask?.request({
     method: 'wallet_getSnaps'
   });
 }

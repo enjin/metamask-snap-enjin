@@ -37,7 +37,7 @@ export async function enablePolkadotSnap(
 
   if (!isInstalled) {
     const metamask = await getMetaMask();
-    await metamask.request({
+    await metamask?.request({
       method: 'wallet_requestSnaps',
       params: {
         [snapId]: { ...snapInstallationParams }

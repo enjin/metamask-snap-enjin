@@ -19,7 +19,7 @@ async function sendSnapMethod(
 ): Promise<unknown> {
   const metamask = await getMetaMask();
 
-  return await metamask.request({
+  return await metamask?.request({
     method: 'wallet_invokeSnap',
     params: {
       request,
