@@ -12,11 +12,11 @@ export async function hasSnapsSupport(
   provider: EIP1193Provider = window.ethereum
 ): Promise<boolean> {
   try {
-    if (provider.isMetaMask && !provider.isPhantom) {
+    if (
       await provider.request({
         method: 'wallet_getSnaps'
-      });
-
+      })
+    ) {
       return true;
     }
 
