@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "MetaMask snap for interacting with Enjin dApps",
   "proposedName": "Enjin Connect",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "git+https://github.com/enjin/metamask-snap-enjin.git"
   },
   "source": {
-    "shasum": "/qO6S3ddv0wq0jOnYo0kFJ35jpEaLtQQfj3C8uREO+k=",
+    "shasum": "lWiOjHeo/zHs5r3YV73YJ5d+QVfPJqDx81Z2xn0JwO0=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
